@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GOAL</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+<body>
+
+    <h1> GOAL Project </h1>
+    <p>Our Goal is to get H1 with our GOAL project :] </p>
+    <h1> Team Members </h1>
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table table-bordered">
+
+                {% for one_team_mate_name, one_team_mate_email in team_mates.items %}
+                    <tr>
+                        <td>{{ one_team_mate_name }}</td>
+                        <td>{{ one_team_mate_email}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
