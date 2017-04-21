@@ -5,7 +5,7 @@ Sentiment Analysis
 Prepare data: use the Backward MaxMatch algorithm to split the content in hashtags. Save the data into format like following: 
 	[{'twitter_content':.........., 'hashtag_content':..........},.....]
 
-Sentiment analysis: use the buildin function to analyse sentence positive or negative(I think it always works for either analysing an area's happiness level or other aspects as long as they are related with 'adjectives')
+Sentiment analysis: use the buildin function to analyse sentence positive or negative(I think it always works for either analysing an area's happiness level or other aspects as long as they are related with 'adjectives') Try: http://text-processing.com/demo/sentiment/  a generated version to test your sentence or word
 
 Subject oriented: use Wu-Palmer algorithm to compare similarities between two words. 
 
