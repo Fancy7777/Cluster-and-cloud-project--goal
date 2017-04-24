@@ -159,3 +159,9 @@ OK
 
 * Note: if you run test cases from PyCharm, make sure to set the run configuration `Working directory` to project content root i.e. `D:\goal`. Not `D:\goal\harvester\tests\`.
 
+---
+
+References:
+
+* https://github.com/victorskl/couchdb-cluster-ansible
+* https://github.com/victorskl/tweepy-tute
