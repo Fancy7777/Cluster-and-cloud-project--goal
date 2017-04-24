@@ -1,29 +1,36 @@
+import logging
+import signal
+import sys
+import time
+
 import tweepy
 from tweepy import Stream
 
 from harvester import config
-
-auth = tweepy.OAuthHandler(config.consumer_key, config.consumer_secret)
-auth.set_access_token(config.access_token, config.access_token_secret)
+from harvester.sapi import TweetStreamingListener
 
 
-class StdOutStreamListener(tweepy.StreamListener):
-    def on_data(self, raw_data):
-        print(raw_data)
+class Harvester(object):
+    def __init__(self):
+        self.auth = tweepy.OAuthHandler(config.consumer_key, config.consumer_secret)
+        self.auth.set_access_token(config.access_token, config.access_token_secret)
+        self.stream = Stream(self.auth, TweetStreamingListener())
+        signal.signal(signal.SIGINT, self.exit_signal_handler)
 
-    def on_error(self, status_code):
-        print(status_code)
+    def exit_signal_handler(self, signum, frame):
+        msg = 'Stopping...'
+        logging.info(msg)
+        print(msg)
+        self.stream.disconnect()
+        time.sleep(10)  # easing
+        sys.exit(0)
 
-
-def streaming():
-    l = StdOutStreamListener()
-    s = Stream(auth, l)
-    s.filter(locations=config.locations, track=config.track)
-
-
-def main():
-    streaming()
+    def start(self):
+        msg = 'Starting tweet stream harvesting. Press Ctrl+C to stop.'
+        logging.info(msg)
+        print(msg)
+        self.stream.filter(locations=config.locations, track=config.track)
 
 
 if __name__ == '__main__':
-    main()
+    Harvester().start()

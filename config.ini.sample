@@ -10,4 +10,5 @@ track = ["melbourne"]
 
 [couchdb]
 connection = http://localhost:5984/
+tweet_db_name = tweet_raw
 

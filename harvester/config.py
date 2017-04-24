@@ -15,6 +15,7 @@ locations = json.loads(parser['filter']['locations'])
 track = json.loads(parser['filter']['track'])
 
 connection = parser['couchdb']['connection']
+tweet_db_name = parser['couchdb']['tweet_db_name']
 
 logging.basicConfig(
     #filename='app_' + datetime.now().strftime('%Y%m%d_%H%M%S') + '.log',
@@ -24,4 +25,4 @@ logging.basicConfig(
     format='%(asctime)s [%(levelname)s] %(message)s',
     datefmt='%m/%d/%Y %I:%M:%S %p')
 
-logging.info('Logger started...')
+logging.info('Logging started...')

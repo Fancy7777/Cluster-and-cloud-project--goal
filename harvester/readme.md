@@ -1,10 +1,39 @@
+## How to Harvester [CLI](https://en.wikipedia.org/wiki/Command-line_interface)
+
+* Go to project root i.e. `cd goal`
+
+* Copy `config.ini.sample` to `config.ini` and configure the parameters
+
+* Invoke `harvester.cli` module
+```
+D:\goal>python -m harvester.cli
+Starting tweet stream harvesting. Press Ctrl+C to stop.
+id: 856523035381121025  rev: 1-639e50a7e194c0b60dcb4823dc9b0b82
+id: 856523043266416640  rev: 1-9eab74db8b29fb6098b37c8e3db84426
+id: 856523043018989568  rev: 1-a82fdf7a832ac8d7ab61933797f8d2de
+id: 856523047246876672  rev: 1-bcec11ebada4e7570e23c06bb75b1638
+id: 856523048307965952  rev: 1-13e4fd3b157ff9b39be7a596e47a48c2
+id: 856523049557934081  rev: 1-ae57853735eb3fadcd24b5f95913d1ba
+id: 856523050614784000  rev: 1-f16812eef42e5555b907679965656cc7
+...
+...
+id: 856523124833001472  rev: 1-815da3b7f6ac949299385796320d19f9
+id: 856523127525752833  rev: 1-06a51e6a39786b1d5cf4abee20142bb6
+Stopping...
+```
+* Open CouchDB Fauxton UI `http://192.168.56.101:5984/_utils/#/_all_dbs` in browser. Enjoy tweets!
+
+* NOTE: avoid invoking the application within a short period interval, again and again. A couple of times is fine though. However, doing so risking black-listing by Twitter. Running it continuous for a day or two is fine though.
+
 ## How to DB Module
 
 ### Configure
 
-* Go to project root i.e. `cd goal`
-* Copy `config.ini.sample` to `config.ini`
-* At `[couchdb]` section, set up CouchDB connection string
+* Go to project root i.e. `cd goal`.
+
+* Copy `config.ini.sample` to `config.ini`.
+
+* At `[couchdb]` section, set up CouchDB connection string.
     * If CouchDB is a Cluster setup then
      ```
      http://cadmin:password@192.168.56.101:5984/
