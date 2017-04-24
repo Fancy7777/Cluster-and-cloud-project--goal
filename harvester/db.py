@@ -79,14 +79,12 @@ class Repository(object):
         https://pythonhosted.org/CouchDB/client.html#database
     
     Object Composition: Repository has a Connection.
-    This is preferably internal use only for the created Repository context.
-    Thus prefix '_connection' in Pythonic way of private access. 
     """
 
     def __init__(self, name, conn):
         self.name = name
-        self._connection = Connection(conn)
-        self.database = self._connection.server[self.name]
+        self.connection = Connection(conn)
+        self.database = self.connection.server[self.name]
 
     def store(self, doc):
         try:
