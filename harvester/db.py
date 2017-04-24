@@ -84,7 +84,12 @@ class Repository(object):
     def __init__(self, name, conn):
         self.name = name
         self.connection = Connection(conn)
-        self.database = self.connection.server[self.name]
+        try:
+            self.database = self.connection.server[self.name]
+        except ResourceNotFound:
+            msg = 'Database is not existed. Creating one --:  {}'.format(self.name)
+            logging.info(msg)
+            self.database = self.connection.spawn(self.name)
 
     def store(self, doc):
         try:
