@@ -89,3 +89,6 @@ ENV/
 .ropeproject
 # ignore JetBrain .idea
 .idea/
+
+config.ini
+*.log

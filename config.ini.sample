@@ -1,0 +1,13 @@
+[twitter]
+consumer_key = consumer_key
+consumer_secret = consumer_secret
+access_token = access_token
+access_token_secret = access_token_secret
+
+[filter]
+locations = [144.6075439453,-38.395491533, 145.2035522461,-37.5990001506]
+track = ["melbourne"]
+
+[couchdb]
+connection = http://localhost:5984/
+
