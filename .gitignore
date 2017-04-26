@@ -92,3 +92,5 @@ ENV/
 
 config.ini
 *.log
+hosts.ini
+*.retry

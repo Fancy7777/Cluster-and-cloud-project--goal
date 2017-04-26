@@ -1,0 +1,140 @@
+# Specifically fine tune for NeCTAR Ubuntu 16.04 Cloud Image
+# You may need to change these for your environment.
+#     e.g. ansible_eth0.ipv4.address TO ansible_enp0s3.ipv4.address
+#     admin, password, cookie, ports
+- hosts: couchdbs
+  tasks:
+    - name: System Update
+      apt:
+        update_cache: yes
+        upgrade: dist
+
+    - name: Check CouchDB Service Exist
+      stat:
+        path: /etc/systemd/system/couchdb.service
+      register: service_status
+
+    - name: Stop CouchDB Service If Exist
+      systemd:
+        name: couchdb
+        state: stopped
+      when: service_status.stat.exists
+
+    - name: Setup Build Environment
+      apt:
+        name: 
+          - build-essential 
+          - pkg-config 
+          - erlang 
+          - libicu-dev 
+          - libmozjs185-dev 
+          - libcurl4-openssl-dev
+        state: latest
+        install_recommends: no
+
+    - name: Download CouchDB
+      get_url:
+        url: http://apache.mirror.serversaustralia.com.au/couchdb/source/2.0.0/apache-couchdb-2.0.0.tar.gz
+        dest: /usr/local/src
+
+    - name: Unpack CouchDB Source
+      unarchive:
+        src: /usr/local/src/apache-couchdb-2.0.0.tar.gz
+        dest: /usr/local/src
+        remote_src: yes
+
+    - name: Configure Build
+      command: chdir=/usr/local/src/apache-couchdb-2.0.0 ./configure
+    
+    - name: Make Build
+      make:
+        chdir: /usr/local/src/apache-couchdb-2.0.0
+        target: release
+
+    - name: Deploy CouchDB
+      command: cp -R /usr/local/src/apache-couchdb-2.0.0/rel/couchdb /opt/
+
+    - name: Add CouchDB System Account
+      user:
+        name: couchdb
+        comment: "CouchDB System Account"
+        shell: /bin/bash
+        system: yes
+        home: /opt/couchdb
+        createhome: no
+
+    - name: Change CouchDB Ownership
+      file:
+        path: /opt/couchdb
+        owner: couchdb
+        group: couchdb
+        mode: 0770
+        recurse: yes
+        state: directory
+
+    - name: Change CouchDB Config File Permission
+      file:
+        path: /opt/couchdb/etc
+        owner: couchdb
+        group: couchdb
+        mode: 0644
+        recurse: yes
+        state: directory
+
+    - name: Change CouchDB Directory Permission
+      command: find /opt/couchdb -type d -exec chmod 0770 {} \;
+
+    - name: Change Node Name
+      replace:
+        dest: /opt/couchdb/etc/vm.args
+        regexp: '^-name couchdb@localhost$'
+        replace: '-name couchdb@{{ansible_eth0.ipv4.address}}'
+
+    - name: Set Cookie
+      replace:
+        dest: /opt/couchdb/etc/vm.args
+        regexp: '^-setcookie monster$'
+        replace: '-setcookie {{cookie}}'
+
+    - name: Bind Cluster Address to Public
+      lineinfile:
+        dest: /opt/couchdb/etc/local.ini
+        insertafter: '\[chttpd\]'
+        line: '{{item}}'
+      with_items:
+        - 'bind_address = 0.0.0.0'
+        - 'port = 9584'
+
+    - name: Bind Node Address to Public
+      lineinfile:
+        dest: /opt/couchdb/etc/local.ini
+        insertafter: '\[httpd\]'
+        line: '{{item}}'
+      with_items:
+        - 'bind_address = 0.0.0.0'
+        - 'port = 9586'
+
+    - name: Add Admin User
+      lineinfile:
+        dest: /opt/couchdb/etc/local.ini
+        insertafter: '^\[admins\]$'
+        line: '{{admin}} = {{password}}'
+
+    - name: Install CouchDB Service
+      copy:
+        src: ./couchdb.service
+        dest: /etc/systemd/system/couchdb.service
+        owner: root
+        group: root
+        mode: 0777
+
+    - name: Enable CouchDB Service
+      systemd:
+        daemon-reload: yes
+        name: couchdb
+        enabled: yes
+
+    - name: Start CouchDB Service
+      systemd:
+        name: couchdb
+        state: started
