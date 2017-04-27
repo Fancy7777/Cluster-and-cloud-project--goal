@@ -1,0 +1,41 @@
+[twitter]
+consumer_key = consumer_key
+consumer_secret = consumer_secret
+access_token = access_token
+access_token_secret = access_token_secret
+
+[filter]
+locations = [144.6075439453,-38.395491533, 145.2035522461,-37.5990001506]
+track = ["melbourne"]
+
+[couchdb]
+connection = http://localhost:5984/
+tweet_db_name = tweet_raw
+
+[credentials]
+aws_access_key_id = INSERT_YOUR_ACCESS_KEY_FROM-ec2rc.sh
+aws_secret_access_key = INSERT_YOUR_SECRET_KEY_FROM-ec2rc.sh
+
+[nectar]
+endpoint = nova.rc.nectar.org.au
+endpoint_path = /services/Cloud
+region = melbourne
+port = 8773
+placement = melbourne
+
+[default]
+instance_name = server
+image_id = ami-86f4a44c
+key_name = INSERT_YOUR_KEY_PAIR_NAME
+instance_type = m2.small
+security_groups = ["default", "ssh"]
+
+[local]
+key_file_path = /home/username/path/to/key/location
+key_file = cloud_key_pair.key
+
+[db]
+admin = admin
+password = password
+cookie = cookie
+
