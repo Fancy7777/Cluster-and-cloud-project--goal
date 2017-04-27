@@ -31,12 +31,3 @@ Sentiment analysis further development(maybe):
 		https://github.com/vivekn/sentiment
 
 
-What I think about the plan is:
-	1. get harvest data(if there's exact queries, otherwise proceed)
-	2. use the above model to get the training data
-		1. sentimental analysis - filter 1
-		2. subject oriented -filter 2
-		3. get training data
-	3. Train the classifier
-	4. Use the model to detect streaming data
-	5. Classification! Done!
