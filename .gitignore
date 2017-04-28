@@ -94,3 +94,6 @@ config.ini
 *.log
 hosts.ini
 *.retry
+
+# ignore node js modules in web app
+node_modules/
