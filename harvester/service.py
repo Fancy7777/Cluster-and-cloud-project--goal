@@ -20,7 +20,7 @@ class TweetHarvestingService(object):
                 tweet['_id'] = tweet['id']
             except KeyError as e:
                 msg = '[SKIP] Tweet without id_str or id.\n'
-                msg += tweet
+                msg += json.dumps(tweet)
                 msg += '\n'
                 logging.exception(msg)
                 skip = True
