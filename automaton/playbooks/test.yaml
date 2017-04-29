@@ -1,0 +1,4 @@
+- hosts: couchdbs
+  tasks:
+    - name: Test
+      shell: echo hello
