@@ -7,7 +7,7 @@ Type=simple
 User=couchdb
 Group=couchdb
 
-ExecStart=/opt/couchdb/bin/couchdb -o /dev/stdout -e /dev/stderr
+ExecStart=/mnt/couchdb/bin/couchdb -o /dev/stdout -e /dev/stderr
 Restart=always
 
 [Install]
