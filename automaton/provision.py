@@ -210,7 +210,6 @@ def main():
 
     # ---------------
     print_heading('Ansibling')
-    time.sleep(10)  # Note: just give time for instance to boot up completely
 
     for ix in selected_ix:
         if ix.state == u'running':
@@ -224,18 +223,32 @@ def main():
     if uin is not None and uin != '':
         username = uin
 
-    play_recipe = 'automaton/playbooks/couchdb.yaml'
+    play_recipe_path = 'automaton/playbooks/'
+    uin = input('Enter playbook recipe path ({}): '.format(play_recipe_path))
+    if uin is not None and uin != '':
+        play_recipe_path = uin
+    print(CHECKED + play_recipe_path)
+
+    play_recipe = 'test.yaml'
     uin = input('Enter playbook recipe path ({}): '.format(play_recipe))
     if uin is not None and uin != '':
         play_recipe = uin
+
+    verbose = False
+    uin = input('Verbose i.e. \'-v\' (y): ')
+    if uin == 'y':
+        verbose = True
 
     cmd = 'ansible-playbook'
     cmd += ' -i ' + host_file
     cmd += ' -u ' + username
     cmd += ' -b --become-method=sudo'
     cmd += ' --key-file=' + os.path.join(key_file_path, key_file)
-    cmd += ' ' + play_recipe
-    cmd += ' --extra-vars "admin=' + config.parser['db']['admin']
+    if verbose:
+        cmd += ' -v'
+    cmd += ' ' + os.path.join(play_recipe_path, play_recipe)
+    cmd += ' --extra-vars "'    # TODO: read extra variable from json file
+    cmd += 'admin=' + config.parser['db']['admin']
     cmd += ' cookie=' + config.parser['db']['cookie']
     cmd += ' password=' + config.parser['db']['password']
     cmd += '"'

@@ -1,0 +1,12 @@
+- hosts: couchdbs
+  vars:
+    tz: 'Australia/Melbourne'
+  tasks:
+    - name: Current Timezone
+      command: date
+
+    - name: Apply Timezone
+      command: timedatectl set-timezone {{tz}}
+
+    - name: Check Timezone
+      command: date

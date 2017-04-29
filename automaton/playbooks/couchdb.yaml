@@ -3,6 +3,8 @@
 #     e.g. ansible_eth0.ipv4.address TO ansible_enp0s3.ipv4.address
 #     admin, password, cookie, ports
 - hosts: couchdbs
+  vars:
+    install_base: mnt
   tasks:
     - name: System Update
       apt:
@@ -52,7 +54,7 @@
         target: release
 
     - name: Deploy CouchDB
-      command: cp -R /usr/local/src/apache-couchdb-2.0.0/rel/couchdb /opt/
+      command: cp -R /usr/local/src/apache-couchdb-2.0.0/rel/couchdb /{{install_base}}/
 
     - name: Add CouchDB System Account
       user:
@@ -60,12 +62,12 @@
         comment: "CouchDB System Account"
         shell: /bin/bash
         system: yes
-        home: /opt/couchdb
+        home: /{{install_base}}/couchdb
         createhome: no
 
     - name: Change CouchDB Ownership
       file:
-        path: /opt/couchdb
+        path: /{{install_base}}/couchdb
         owner: couchdb
         group: couchdb
         mode: 0770
@@ -74,7 +76,7 @@
 
     - name: Change CouchDB Config File Permission
       file:
-        path: /opt/couchdb/etc
+        path: /{{install_base}}/couchdb/etc
         owner: couchdb
         group: couchdb
         mode: 0644
@@ -82,23 +84,23 @@
         state: directory
 
     - name: Change CouchDB Directory Permission
-      command: find /opt/couchdb -type d -exec chmod 0770 {} \;
+      command: find /{{install_base}}/couchdb -type d -exec chmod 0770 {} \;
 
     - name: Change Node Name
       replace:
-        dest: /opt/couchdb/etc/vm.args
+        dest: /{{install_base}}/couchdb/etc/vm.args
         regexp: '^-name couchdb@localhost$'
         replace: '-name couchdb@{{ansible_eth0.ipv4.address}}'
 
     - name: Set Cookie
       replace:
-        dest: /opt/couchdb/etc/vm.args
+        dest: /{{install_base}}/couchdb/etc/vm.args
         regexp: '^-setcookie monster$'
         replace: '-setcookie {{cookie}}'
 
     - name: Bind Cluster Address to Public
       lineinfile:
-        dest: /opt/couchdb/etc/local.ini
+        dest: /{{install_base}}/couchdb/etc/local.ini
         insertafter: '\[chttpd\]'
         line: '{{item}}'
       with_items:
@@ -107,16 +109,16 @@
 
     - name: Bind Node Address to Public
       lineinfile:
-        dest: /opt/couchdb/etc/local.ini
+        dest: /{{install_base}}/couchdb/etc/local.ini
         insertafter: '\[httpd\]'
         line: '{{item}}'
       with_items:
-        - 'bind_address = 0.0.0.0'
+        - 'bind_address = 0.0.0.0 '
         - 'port = 9586'
 
     - name: Add Admin User
       lineinfile:
-        dest: /opt/couchdb/etc/local.ini
+        dest: /{{install_base}}/couchdb/etc/local.ini
         insertafter: '^\[admins\]$'
         line: '{{admin}} = {{password}}'
 
