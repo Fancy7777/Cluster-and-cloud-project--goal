@@ -247,7 +247,7 @@ def main():
     if verbose:
         cmd += ' -v'
     cmd += ' ' + os.path.join(play_recipe_path, play_recipe)
-    cmd += ' --extra-vars "'    # TODO: read extra variable from json file
+    cmd += ' --extra-vars "'  # TODO: read extra variable from json file
     cmd += 'admin=' + config.parser['db']['admin']
     cmd += ' cookie=' + config.parser['db']['cookie']
     cmd += ' password=' + config.parser['db']['password']
@@ -271,9 +271,16 @@ def main():
 
 
 if __name__ == '__main__':
+    """
+    Ansible has very specific SSH implementation that works nicely in *nix environment.
+    No hope for Windows and Cygwin. For Windows, the only hope is WSL Bash on Ubuntu on Windows.
+    Or VirtualBox.
+    """
+
     colorama.init()
-    if 'Windows' in platform.system():
-        print(Fore.RED + 'Script does not run on Windows'.upper())
+    os_env = platform.system()
+    if 'Windows' in os_env or 'CYGWIN' in os_env:
+        print(Fore.RED + 'Script does not run on {}'.format(os_env).upper())
         exit()
     main()
     colorama.deinit()
