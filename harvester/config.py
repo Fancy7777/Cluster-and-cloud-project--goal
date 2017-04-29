@@ -18,8 +18,7 @@ connection = parser['couchdb']['connection']
 tweet_db_name = parser['couchdb']['tweet_db_name']
 
 logging.basicConfig(
-    #filename='app_' + datetime.now().strftime('%Y%m%d_%H%M%S') + '.log',
-    filename='app.log',
+    filename='harvester_' + datetime.now().strftime('%Y%m%d_%H%M%S') + '.log',
     filemode='w',
     level=logging.INFO,
     format='%(asctime)s [%(levelname)s] %(message)s',
