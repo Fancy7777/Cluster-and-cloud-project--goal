@@ -3,8 +3,8 @@ import json
 #from harvester.service import TweetHarvestingService as tweet_service
 
 ausgrid = [111.89575195844913,-44.01059552028073,154.9154663073704,-9.93368223492055]
-couch = couchdb.Server('http://cadmin:qwerty8888@115.146.94.41:9584/')
-db = couch['import_test']
+couch = couchdb.Server('serverlink')
+db = couch['dbname']
 COUNT = 0
 
 def checklocation(coordinate):
