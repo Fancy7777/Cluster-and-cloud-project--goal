@@ -3,7 +3,7 @@ import unittest
 from automaton.nectar import firewall
 
 
-class ConnectionTestCase(unittest.TestCase):
+class FirewallTestCase(unittest.TestCase):
     def setUp(self):
         self.sec_grp = 'apache'
         self.sec_desc = 'Our Apache Group'
