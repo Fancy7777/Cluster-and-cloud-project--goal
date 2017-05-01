@@ -1,0 +1,13 @@
+- hosts: couchdbs
+  vars:
+    dir_base: media
+    dir_name: backup
+    mt_path: /{{dir_base}}/{{dir_name}}
+    dev_name: /dev/vdc
+  tasks:
+    - name: Unmount Backup
+      mount:
+        name: "{{mt_path}}"
+        src: "{{dev_name}}"
+        fstype: ext4
+        state: unmounted

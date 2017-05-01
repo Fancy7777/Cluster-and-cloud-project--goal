@@ -21,7 +21,7 @@ endpoint = nova.rc.nectar.org.au
 endpoint_path = /services/Cloud
 region = melbourne
 port = 8773
-placement = melbourne
+placement = melbourne-np
 
 [default]
 instance_name = server

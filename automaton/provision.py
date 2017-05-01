@@ -7,14 +7,16 @@ import time
 from os.path import expanduser
 
 import colorama
+import re
 from colorama import Style, Fore, Back
 
-from automaton.nectar import vm, config, firewall
+from automaton.nectar import vm, config, firewall, volumes
 
 conn = vm.conn
 parser = configparser.ConfigParser(allow_no_value=True, delimiters=' ')
 
 CHECKED = '[ ' + Fore.GREEN + 'check' + Fore.RESET + ' ]  '
+FAILED = '[ ' + Fore.RED + 'fail' + Fore.RESET + ' ]  '
 
 
 def print_heading(heading):
@@ -88,19 +90,23 @@ def main():
 
     # ---------------
     print_heading('New Provision')
+    uin = input('Create new instances? (y or n): ')
     cnt = 0
-    try:
-        cnt = int(input('How many instances require? (1-50): '))
-        if cnt in range(1, 50):
-            uin = input('Create {} new instances? (y or n): '.format(cnt))
-            if uin == 'y':
-                vm.create_server(cnt)
-            elif uin != 'n':
+    if uin == 'y':
+        try:
+            cnt = int(input('How many new instances require? (1-50): '))
+            if cnt in range(1, 50):
+                uin = input('Create {} new instances? (y or n): '.format(cnt))
+                if uin == 'y':
+                    vm.create_server(cnt)
+                elif uin != 'n':
+                    print_invalid_exit()
+            else:
                 print_invalid_exit()
-        else:
+        except ValueError:
             print_invalid_exit()
-    except ValueError:
-        print_invalid_exit()
+    else:
+        pass
 
     instances = conn.get_only_instances()
     total_instances = len(instances)
@@ -205,6 +211,66 @@ def main():
             print(CHECKED + 'Adding rules to security group {} with opening ports {}'.format(selected_sg.name, ports))
             for p in ports:
                 firewall.open_tcp_port(p, selected_sg.name)
+
+    print_footer()
+
+    # ---------------
+    print_heading('Volumes Provision')
+    uin = input('Provision volumes? (y or n): ')
+    if uin == 'y':
+        uin = input('Create new volumes? (y or n): ')
+        if uin == 'y':
+            try:
+                req_vol_count = int(input('How many? (num > 0): '))
+                req_vol_size = int(input('Enter size GB (size > 0): '))
+                if req_vol_size < 1:
+                    print_invalid_exit()
+                for c in range(req_vol_count):
+                    req_vol = volumes.create_volume(req_vol_size)
+            except ValueError:
+                print_invalid_exit()
+
+        vol_list = conn.get_all_volumes()
+        if len(vol_list) > 0:
+            # nested
+            print_footer()
+            print_heading('Volumes Allocation')
+            for idx, vol in enumerate(vol_list):
+                print(' \t{}\t{}GB\t{}\t{}'.format(vol.id, vol.size, vol.zone, vol.status))
+            print('')
+            for vol in vol_list:
+                if vol.status == 'available':
+                    uin = input('Do you like to attach {} now? (y or n): '.format(vol.id))
+                    if uin == 'y':
+                        try:
+                            sel_inst_idx = int(input('Pick an instance index number: '))
+                            if sel_inst_idx not in range(0, len(selected_ix)):
+                                print_invalid_exit()
+                            else:
+                                dev_name = '/dev/vdc'
+                                uin = input('Enter device name ({}): '.format(dev_name))
+                                if uin != '':
+                                    dev_name_ok = re.match('\/dev\/vd[a-z]', uin)
+                                    if dev_name_ok is None:
+                                        print_invalid_exit()
+                                    else:
+                                        dev_name = uin
+                                sel_inst = selected_ix[sel_inst_idx]
+                                success = conn.attach_volume(vol.id, sel_inst.id, device=dev_name)
+                                if success:
+                                    print(CHECKED + 'Volume {} has successfully attached to {}.'
+                                          .format(vol.id, sel_inst.id))
+                                else:
+                                    print(FAILED + 'Failed to attach volume {} to {}.'
+                                          .format(vol.id, sel_inst.id))
+                        except ValueError:
+                            print_invalid_exit()
+                    else:
+                        pass
+        else:
+            print('\nYou have no volumes provisioned.')
+    else:
+        pass
 
     print_footer()
 

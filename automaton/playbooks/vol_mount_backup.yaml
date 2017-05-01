@@ -1,0 +1,23 @@
+- hosts: couchdbs
+  vars:
+    dir_base: media
+    dir_name: backup
+    mt_path: /{{dir_base}}/{{dir_name}}
+    dev_name: /dev/vdc
+  tasks:
+    - name: Creates Directory
+      file:
+        path: "{{mt_path}}"
+        state: directory
+
+    - name: Make File System
+      filesystem:
+        fstype: ext4
+        dev: "{{dev_name}}"
+
+    - name: Mount Backup
+      mount:
+        name: "{{mt_path}}"
+        src: "{{dev_name}}"
+        fstype: ext4
+        state: mounted
