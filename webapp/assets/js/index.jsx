@@ -10,6 +10,7 @@ import LineChart from './linechart.jsx'
 import BarChart from './barchart.jsx'
 import PieChart from './piechart.jsx'
 import SideBar from './sidebar.jsx'
+import Tab from './tab.jsx'
 // var React = require('react')
 // var ReactDOM = require('react-dom')
 //
@@ -95,10 +96,10 @@ class HeatMapBox extends React.Component{
 		L.geoJson(melbourneGeo).addTo(mymap)
 
 		let points = addressPoints.map((p) => { return [p[0], p[1]] })
-		console.log("points => " + points[0] );
-		console.log("L.heatLayer => " + L.heatLayer );
+		// console.log("points => " + points[0] );
+		// console.log("L.heatLayer => " + L.heatLayer );
 		let heat = L.heatLayer(points, {minOpacity: 0.1}).addTo(mymap);
-		console.log("heat => " + heat);
+		// console.log("heat => " + heat);
 
 		let latlong = []
 		let latBound = 90
@@ -113,7 +114,7 @@ class HeatMapBox extends React.Component{
 					// latlong = [Math.random()*(Math.random() < 0.5 ? -1 : 1) * latBound, Math.random()*(Math.random() < 0.5 ? -1 : 1) * longBound]
 					//console.log("lat lon =>" + latlog)
 					latlong = [Math.random()*(maxLat-minLat)+minLat, Math.random()*(maxLon-minLon)+minLon, 1]
-					console.log("lat lon =>" + latlong)
+					// console.log("lat lon =>" + latlong)
 					heat.addLatLng(latlong)},
 	      	100
     	)
@@ -124,7 +125,7 @@ class HeatMapBox extends React.Component{
 		return(
 				<div>
 					<h1>Heat Map</h1>
-					<div id={this.props.mapid} style={{height:"600px", width:"800px", position:"relative"}}></div>
+					<div id={this.props.mapid} style={{height:"250px", width:"500px", position:"relative"}}></div>
 				</div>
 		)
 	}
@@ -173,9 +174,9 @@ var dataPie = {
 let ChartsMultiple = () => {
 	return (
 		<div>
-			<LineChart chartId={"mychart1"} chartTitle={"Line Chart 1"} chartData={data}/>
-			<BarChart chartId={"mychart2"} chartTitle={"Bar Chart 1"} chartData={data}/>
-			<PieChart chartId={"mychart3"} chartTitle={"Pie Chart 1"} chartData={dataPie}/>
+			<LineChart chartId={"mychart1"} title={"Line Chart 1"} chartData={data}/>
+			<BarChart chartId={"mychart2"} title={"Bar Chart 1"} chartData={data}/>
+			<PieChart chartId={"mychart3"} title={"Pie Chart 1"} chartData={dataPie}/>
 		</div>
 	)
 }
@@ -188,12 +189,12 @@ ReactDOM.render(<SideBar sideBarData={sideBarData}/>, document.getElementById('s
 ReactDOM.render(<TestHelloWorld myWords={["hello world ", "We are team GOAL"]}/>, document.getElementById('container'))
 ReactDOM.render(<TwitterStreamBox ajax_url={ajax_url}/>, document.getElementById('twitter'))
 ReactDOM.render(<ChartsMultiple />, document.getElementById('charts'))
-
-
-// ReactDOM.render(<LineChart chartId={"mychart2"} chartTitle={"First Line Chart"} chartData={data}/>, document.getElementById('charts'))
-// ReactDOM.render(<LineChart chartId={"mychart3"} chartTitle={"First Line Chart"} chartData={data}/>, document.getElementById('charts'))
-
-// ReactDOM.render(<HeatMapBox mapboxAccessUrl={mapboxAccess} mapid={mapid}/>, document.getElementById('map-outer'))
+ReactDOM.render(<HeatMapBox title={"Heat Map"} mapboxAccessUrl={mapboxAccess} mapid={mapid}/>, document.getElementById('map-outer'))
+ReactDOM.render(
+				<Tab >
+					<LineChart chartId={"mychart1"} title={"Line Chart tab"} chartData={data}/>
+					<BarChart chartId={"mychart2"} title={"Bar Chart 1"} chartData={data}/>
+				</Tab>, document.getElementById('tabs'))
 
 
 

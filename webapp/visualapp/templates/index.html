@@ -1,72 +1,78 @@
-{% load render_bundle from webpack_loader %}
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>GOAL</title>
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-	<link href="{% static 'css/chartist.min.css' %}" rel="stylesheet">
-	<link href="{% static 'css/simple-sidebar.css' %}" rel="stylesheet">
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"
-  integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ=="
-  crossorigin=""/>
+{% extends "./base.html" %}
 
-
-</head>
-<body>
+{% block content %}
 	<!-- side bar inspired from -->
 	<!-- https://github.com/BlackrockDigital/startbootstrap-simple-sidebar -->
 
+<div id="wrapper" class="toggled">
 	<!-- Sidebar -->
-	<!-- /#sidebar-wrapper -->
+	<div id="sidebar-wrapper"> </div>
 
-    <div id="wrapper" class="toggled">
+	<div id="tabs">
+		<!-- <div class="tab-button">
+		  <button class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen">London</button>
+		  <button class="tablinks" onclick="openCity(event, 'Paris')">Paris</button>
+		  <button class="tablinks" onclick="openCity(event, 'Tokyo')">Tokyo</button>
+		</div>
 
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
+		<div id="London" class="tabcontent">
+		  <h3>London</h3>
+		  <p>London is the capital city of England.</p>
+		</div>
 
-        </div>
+		<div id="Paris" class="tabcontent">
+		  <h3>Paris</h3>
+		  <p>Paris is the capital of France.</p>
+		</div>
 
-		<!-- <div id="wrapper" class="toggled">
-			<div id="sidebar-wrapper">
-				<ul className={"sidebar-nav"}>
-	 			   	<li className={"sidebar-brand"}>
-	 				   	<a href={"#"}>
-	 					   	GOAL Team
-	 				   	</a>
-	 			   	</li>
-	 		   	</ul>
-			</div>
+		<div id="Tokyo" class="tabcontent">
+		  <h3>Tokyo</h3>
+		  <p>Tokyo is the capital of Japan.</p>
 		</div> -->
+	</div>
+	<!-- <script>
+	function openCity(evt, cityName) {
+	    var i, tabcontent, tablinks;
+	    tabcontent = document.getElementsByClassName("tabcontent");
+	    for (i = 0; i < tabcontent.length; i++) {
+	        tabcontent[i].style.display = "none";
+	    }
+	    tablinks = document.getElementsByClassName("tablinks");
+	    for (i = 0; i < tablinks.length; i++) {
+	        tablinks[i].className = tablinks[i].className.replace(" active", "");
+	    }
+	    document.getElementById(cityName).style.display = "block";
+	    evt.currentTarget.className += " active";
+	}
 
+	// Get the element with id="defaultOpen" and click on it
+	document.getElementById("defaultOpen").click();
+	</script> -->
 
-		<div id="page-content-wrapper">
-			<h1> GOAL Project </h1>
-		    <p>Our Goal is to get H1 with our GOAL project :] </p>
-		    <h1> Team Members </h1>
-		    <div class="row">
-		        <div class="col-md-8">
-		            <table class="table table-bordered">
+	<div id="page-content-wrapper">
+		<h1> GOAL Project </h1>
+	    <p>Our Goal is to get H1 with our GOAL project :] </p>
+	    <h1> Team Members </h1>
+	    <div class="row">
+	        <div class="col-md-8">
+	            <table class="table table-bordered">
 
-		                {% for one_team_mate_name, one_team_mate_email in team_mates.items %}
-		                    <tr>
-		                        <td>{{ one_team_mate_name }}</td>
-		                        <td>{{ one_team_mate_email}}</td>
-		                    </tr>
-		                {% endfor %}
-		            </table>
-		        </div>
-		    </div>
-		    <div id="container"></div>
-			<div id="twitter"></div>
-			<!-- <div id="map-outer" style="height:500px;width:500px;position:relative"> </div> -->
-			<div id="charts"></div>
-			<div class="ct-chart ct-golden-section" id="chart1"></div>
-			<div class="ct-chart ct-golden-section" id="chart2"></div>
-			<div class="ct-chart ct-golden-section" id="chart3"></div>
-        </div>
-
-    {% render_bundle 'main' %}
-</body>
-</html>
+	                {% for one_team_mate_name, one_team_mate_email in team_mates.items %}
+	                    <tr>
+	                        <td>{{ one_team_mate_name }}</td>
+	                        <td>{{ one_team_mate_email}}</td>
+	                    </tr>
+	                {% endfor %}
+	            </table>
+	        </div>
+	    </div>
+	    <div id="container"></div>
+		<div id="twitter"></div>
+		<div id="map-outer" style="height:300px;width:300px;position:relative"> </div>
+		<div id="charts"></div>
+		<div class="ct-chart ct-golden-section" id="chart1"></div>
+		<div class="ct-chart ct-golden-section" id="chart2"></div>
+		<div class="ct-chart ct-golden-section" id="chart3"></div>
+	</div>
+</div>
+{% endblock %}

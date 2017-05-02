@@ -19,7 +19,7 @@ class LineChart extends React.Component {
 	render() {
 		return(
 			<div>
-					<h2> {this.props.chartTitle} </h2>
+					<h2> {this.props.title} </h2>
 					<div className={"charts"} id={this.props.chartId}></div>
 			</div>
 
