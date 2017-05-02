@@ -7,6 +7,7 @@
     <title>GOAL</title>
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 	<link href="{% static 'css/chartist.min.css' %}" rel="stylesheet">
+	<link href="{% static 'css/simple-sidebar.css' %}" rel="stylesheet">
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"
   integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ=="
   crossorigin=""/>
@@ -14,30 +15,58 @@
 
 </head>
 <body>
+	<!-- side bar inspired from -->
+	<!-- https://github.com/BlackrockDigital/startbootstrap-simple-sidebar -->
 
-    <h1> GOAL Project </h1>
-    <p>Our Goal is to get H1 with our GOAL project :] </p>
-    <h1> Team Members </h1>
-    <div class="row">
-        <div class="col-md-8">
-            <table class="table table-bordered">
+	<!-- Sidebar -->
+	<!-- /#sidebar-wrapper -->
 
-                {% for one_team_mate_name, one_team_mate_email in team_mates.items %}
-                    <tr>
-                        <td>{{ one_team_mate_name }}</td>
-                        <td>{{ one_team_mate_email}}</td>
-                    </tr>
-                {% endfor %}
-            </table>
+    <div id="wrapper" class="toggled">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+
         </div>
-    </div>
-    <div id="container"></div>
-	<div id="twitter"></div>
-	<!-- <div id="map-outer" style="height:500px;width:500px;position:relative"> </div> -->
-	<div id="charts"></div>
-	<div class="ct-chart ct-golden-section" id="chart1"></div>
-	<div class="ct-chart ct-golden-section" id="chart2"></div>
-	<div class="ct-chart ct-golden-section" id="chart3"></div>
+
+		<!-- <div id="wrapper" class="toggled">
+			<div id="sidebar-wrapper">
+				<ul className={"sidebar-nav"}>
+	 			   	<li className={"sidebar-brand"}>
+	 				   	<a href={"#"}>
+	 					   	GOAL Team
+	 				   	</a>
+	 			   	</li>
+	 		   	</ul>
+			</div>
+		</div> -->
+
+
+		<div id="page-content-wrapper">
+			<h1> GOAL Project </h1>
+		    <p>Our Goal is to get H1 with our GOAL project :] </p>
+		    <h1> Team Members </h1>
+		    <div class="row">
+		        <div class="col-md-8">
+		            <table class="table table-bordered">
+
+		                {% for one_team_mate_name, one_team_mate_email in team_mates.items %}
+		                    <tr>
+		                        <td>{{ one_team_mate_name }}</td>
+		                        <td>{{ one_team_mate_email}}</td>
+		                    </tr>
+		                {% endfor %}
+		            </table>
+		        </div>
+		    </div>
+		    <div id="container"></div>
+			<div id="twitter"></div>
+			<!-- <div id="map-outer" style="height:500px;width:500px;position:relative"> </div> -->
+			<div id="charts"></div>
+			<div class="ct-chart ct-golden-section" id="chart1"></div>
+			<div class="ct-chart ct-golden-section" id="chart2"></div>
+			<div class="ct-chart ct-golden-section" id="chart3"></div>
+        </div>
+
     {% render_bundle 'main' %}
 </body>
 </html>

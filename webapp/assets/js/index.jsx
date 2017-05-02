@@ -9,6 +9,7 @@ import Chartist from 'chartist'
 import LineChart from './linechart.jsx'
 import BarChart from './barchart.jsx'
 import PieChart from './piechart.jsx'
+import SideBar from './sidebar.jsx'
 // var React = require('react')
 // var ReactDOM = require('react-dom')
 //
@@ -179,9 +180,16 @@ let ChartsMultiple = () => {
 	)
 }
 
+let sideBarData = [
+					{"href":"#", "hrefName":"Home"},
+					{"href":"#", "hrefName":"About"}
+				]
+ReactDOM.render(<SideBar sideBarData={sideBarData}/>, document.getElementById('sidebar-wrapper'))
 ReactDOM.render(<TestHelloWorld myWords={["hello world ", "We are team GOAL"]}/>, document.getElementById('container'))
 ReactDOM.render(<TwitterStreamBox ajax_url={ajax_url}/>, document.getElementById('twitter'))
 ReactDOM.render(<ChartsMultiple />, document.getElementById('charts'))
+
+
 // ReactDOM.render(<LineChart chartId={"mychart2"} chartTitle={"First Line Chart"} chartData={data}/>, document.getElementById('charts'))
 // ReactDOM.render(<LineChart chartId={"mychart3"} chartTitle={"First Line Chart"} chartData={data}/>, document.getElementById('charts'))
 
