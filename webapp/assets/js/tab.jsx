@@ -7,6 +7,8 @@ class Tab extends React.Component {
 
 	constructor(props) {
     	super(props)
+		this.elements = {}
+		// React.Children.map(this.props.children,(elem, index) => {
 
 	}
 
@@ -23,7 +25,7 @@ class Tab extends React.Component {
 	    }
 	}
 
-	openTab(evt, tabName) {
+	openTab(evt, tabName, elem) {
 	    let i, tabcontent, tablinks;
 	    tabcontent = document.getElementsByClassName("tabcontent");
 	    for (i = 0; i < tabcontent.length; i++) {
@@ -37,7 +39,10 @@ class Tab extends React.Component {
 		// console.log("element => " + document.getElementById(tabName) )
 	    document.getElementById(tabName).style.display = "block";
 	    evt.currentTarget.className += " active";
-
+		// console.log("char id " + elem.props.chartId)
+		// force the charts to call update()
+		document.getElementById(elem.props.chartId).click()
+		// elem.updateChart()
 	}
 
 	render() {
@@ -47,7 +52,7 @@ class Tab extends React.Component {
 				<div className={"tab-button"}>
 					{
 						React.Children.map(this.props.children,(elem, index) => {
-
+							// console.log("elem updateChart => " + elem.updateChart)
 							let title = elem.props.title
 							if (index == 0)
 							{
@@ -67,7 +72,7 @@ class Tab extends React.Component {
 						return (
 								<div id={title} className={"tabcontent"} >
 									<h3>{title}</h3>
-									{elem}
+									{ elem }
 								</div>
 						)
 					})
