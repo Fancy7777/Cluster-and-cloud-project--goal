@@ -7,7 +7,7 @@ import BarChart from './barchart.jsx'
 import PieChart from './piechart.jsx'
 import SideBar from './sidebar.jsx'
 import Tab from './tab.jsx'
-import HeatMapBox from './HeatMapBox.jsx'
+import HeatMapBox from './heatMapBox.jsx'
 
 function sleep(delay)
 {
