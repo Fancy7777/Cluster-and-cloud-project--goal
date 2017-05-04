@@ -9,17 +9,29 @@ class BarChart extends React.Component {
     	super(props)
 		this.chart = null
 		this.barDistance = 10
-
+		this.updateChart = this.updateChart.bind(this)
+		this.options = {}
 	}
 
 	componentDidMount() {
 		// chartData {labels: [], series [[]...]}
+		this.options = {
+			seriesBarDistance: this.barDistance
+		}
 		this.chart = new Chartist.Bar('#' + this.props.chartId,
-			this.props.chartData,
-			{
-				seriesBarDistance: this.barDistance
-			}
+			this.props.chartData, this.options
+
 		)
+	}
+
+
+	updateChart()
+	{
+		if (this.chart != null)
+		{
+			this.chart.update(this.props.chartData, this.options, false)
+		}
+
 	}
 
 
@@ -27,7 +39,7 @@ class BarChart extends React.Component {
 		return(
 			<div>
 					<h2> {this.props.title} </h2>
-					<div className={"charts"} id={this.props.chartId}></div>
+					<div className={"charts"} id={this.props.chartId} onClick={this.updateChart}></div>
 			</div>
 
 		)

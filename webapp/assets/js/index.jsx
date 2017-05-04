@@ -188,12 +188,13 @@ let sideBarData = [
 ReactDOM.render(<SideBar sideBarData={sideBarData}/>, document.getElementById('sidebar-wrapper'))
 ReactDOM.render(<TestHelloWorld myWords={["hello world ", "We are team GOAL"]}/>, document.getElementById('container'))
 ReactDOM.render(<TwitterStreamBox ajax_url={ajax_url}/>, document.getElementById('twitter'))
-ReactDOM.render(<ChartsMultiple />, document.getElementById('charts'))
+// ReactDOM.render(<ChartsMultiple />, document.getElementById('charts'))
 ReactDOM.render(<HeatMapBox title={"Heat Map"} mapboxAccessUrl={mapboxAccess} mapid={mapid}/>, document.getElementById('map-outer'))
 ReactDOM.render(
 				<Tab >
-					<LineChart chartId={"mychart1"} title={"Line Chart tab"} chartData={data}/>
-					<BarChart chartId={"mychart2"} title={"Bar Chart 1"} chartData={data}/>
+					<LineChart chartId={"mychart3"} title={"Line Chart tab"} chartData={data}/>
+					<BarChart chartId={"mychart4"} title={"Bar Chart tab"} chartData={data}/>
+					<PieChart chartId={"mychart5"} title={"Pie Chart tab"} chartData={dataPie}/>
 				</Tab>, document.getElementById('tabs'))
 
 
