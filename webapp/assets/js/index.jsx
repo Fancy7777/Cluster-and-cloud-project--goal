@@ -32,12 +32,23 @@ class TwitterStreamBox extends React.Component {
 	constructor(props) {
     	super(props)
     	this.state = {date: ""}
+		this.limit = 1
+		this.skip = 0
+		this.includeDocs = true
+		this.fetchOptions = { method: 'GET',
+               headers: new Headers(),
+               mode: 'cors',
+               cache: 'default' }
+		this.tick = this.tick.bind(this)
+		this.maxTweets = 0
+		// http://115.146.95.52:9584/tweet_raw/_all_docs?limit=1&include_docs=true&skip=1
 	}
 
 	componentDidMount() {
+		this.tick()
     	this.timerID = setInterval(
 	      	() => this.tick(),
-	      	1000
+	      	10000
     	)
 	}
 
@@ -46,11 +57,49 @@ class TwitterStreamBox extends React.Component {
   	}
 
 	tick() {
-		fetch(this.props.ajax_url)
+		fetch(`${this.props.ajax_url}?limit=${this.limit}&include_docs=${this.includeDocs}&skip=${this.skip}`,  this.fetchOptions)
 			.then((response) => {
 		    	return response.json()})
 			.then((json) => {
-		    	this.setState({ date: "full date => " + json.fulldate})})
+				console.log(" => " + json.rows[0].doc.created_at)
+				let placeName = ""
+				let text = ""
+
+				if (this.maxTweets == 0)
+				{
+					// total_rows is not safe to use, it also include view's rows
+					this.maxTweets = json.total_rows
+				}
+
+				try {
+
+					if (json.rows[0].doc.text != null) {
+						text = json.rows[0].doc.text
+					}
+
+					// some tweets has no place, prevent place trigger exceptio frist so put it here
+					if (json.rows[0].doc.place.name != null) {
+						placeName =json.rows[0].doc.place.name
+					}
+
+				}
+				catch(e) {
+					if (e instanceof TypeError) {
+						console.log('type error, some field is not present', e)
+					}
+					else {
+						throw e
+					}
+
+				}
+
+				if (this.skip <= this.maxTweets && this.maxTweets != 0 ) {
+					this.skip += 1
+				}
+				else {
+					this.skip = 0
+				}
+		    	this.setState({ date: `Tweet text => ${text}, Place => ${placeName}`})})
 			.catch((ex) => {
 		    	console.log('parsing failed', ex)
 		  	})
@@ -58,13 +107,16 @@ class TwitterStreamBox extends React.Component {
 
 	render() {
 		return(
-			<h2> Current time: <br/> {this.state.date} </h2>
+			<h2> Stream Tweet: <br/> {this.state.date} </h2>
 		)
 	}
 }
 
 
-let ajax_url = "https://script.googleusercontent.com/macros/echo?user_content_key=6dhhq9B18h7W-TaSRDEYWmeiqbClKxjidwn69RyAU_LRmR-fedpDm5BHwJ50yc-aGnjdLfv3dN0qgb6PVbeg8YYi4zJUGlMFm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnJ9GRkcRevgjTvo8Dc32iw_BLJPcPfRdVKhJT5HNzQuXEeN3QFwl2n0M6ZmO-h7C6bwVq0tbM60-hWoa2zNWdeqVcgbF5zHdvQ&lib=MwxUjRcLr2qLlnVOLh12wSNkqcO1Ikdrk"
+// let ajax_url = "https://script.googleusercontent.com/macros/echo?user_content_key=6dhhq9B18h7W-TaSRDEYWmeiqbClKxjidwn69RyAU_LRmR-fedpDm5BHwJ50yc-aGnjdLfv3dN0qgb6PVbeg8YYi4zJUGlMFm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnJ9GRkcRevgjTvo8Dc32iw_BLJPcPfRdVKhJT5HNzQuXEeN3QFwl2n0M6ZmO-h7C6bwVq0tbM60-hWoa2zNWdeqVcgbF5zHdvQ&lib=MwxUjRcLr2qLlnVOLh12wSNkqcO1Ikdrk"
+// ?limit={this.limit}&include_docs=true
+let ajax_url = "http://115.146.95.52:9584/tweet_raw/_all_docs" // test db
+
 
 let mapboxAccess = "https://api.mapbox.com/styles/v1/mapbox/outdoors-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGl1YmluZ2ZlbmciLCJhIjoiY2lxN3pnYTlqMDB2cGZ5bTFmbHRyODU2OSJ9.GnnMuWeQ1EQ4RAgmttR-pg"
 
@@ -105,7 +157,7 @@ ReactDOM.render(<SideBar sideBarData={sideBarData}/>, document.getElementById('s
 ReactDOM.render(<TestHelloWorld myWords={["hello world ", "We are team GOAL"]}/>, document.getElementById('container'))
 ReactDOM.render(<TwitterStreamBox ajax_url={ajax_url}/>, document.getElementById('twitter'))
 // ReactDOM.render(<ChartsMultiple />, document.getElementById('charts'))
-ReactDOM.render(<HeatMapBox title={"Heat Map"} mapboxAccessUrl={mapboxAccess} mapid={mapid}/>, document.getElementById('map-outer'))
+// ReactDOM.render(<HeatMapBox title={"Heat Map"} mapboxAccessUrl={mapboxAccess} mapid={mapid}/>, document.getElementById('map-outer'))
 ReactDOM.render(
 				<Tab >
 					<LineChart chartId={"mychart3"} title={"Line Chart tab"} chartData={data}/>
