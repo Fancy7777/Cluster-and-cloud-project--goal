@@ -150,17 +150,28 @@ let ChartsMultiple = () => {
 }
 
 let sideBarData = [
-					{"href":"#", "hrefName":"Home"},
-					{"href":"#", "hrefName":"About"}
+					{"href":window.location.origin, "hrefName":"Home"},
+					{"href":window.location.origin + "/about", "hrefName":"About"}
 				]
-ReactDOM.render(<SideBar sideBarData={sideBarData}/>, document.getElementById('sidebar-wrapper'))
-ReactDOM.render(<TestHelloWorld myWords={["hello world ", "We are team GOAL"]}/>, document.getElementById('container'))
-ReactDOM.render(<TwitterStreamBox ajax_url={ajax_url}/>, document.getElementById('twitter'))
+
+if (document.getElementById('sidebar-wrapper')) {
+	ReactDOM.render(<SideBar sideBarData={sideBarData}/>, document.getElementById('sidebar-wrapper'))
+}
+if (document.getElementById('container')) {
+	ReactDOM.render(<TestHelloWorld myWords={["hello world ", "We are team GOAL"]}/>, document.getElementById('container'))
+}
+
+if (document.getElementById('twitter')) {
+	ReactDOM.render(<TwitterStreamBox ajax_url={ajax_url}/>, document.getElementById('twitter'))
+}
 // ReactDOM.render(<ChartsMultiple />, document.getElementById('charts'))
 // ReactDOM.render(<HeatMapBox title={"Heat Map"} mapboxAccessUrl={mapboxAccess} mapid={mapid}/>, document.getElementById('map-outer'))
+
+if (document.getElementById('tabs')) {
 ReactDOM.render(
 				<Tab >
 					<LineChart chartId={"mychart3"} title={"Line Chart tab"} chartData={data}/>
 					<BarChart chartId={"mychart4"} title={"Bar Chart tab"} chartData={data}/>
 					<PieChart chartId={"mychart5"} title={"Pie Chart tab"} chartData={dataPie}/>
 				</Tab>, document.getElementById('tabs'))
+}

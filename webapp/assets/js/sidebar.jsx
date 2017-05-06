@@ -17,7 +17,7 @@ class SideBar extends React.Component {
 		return(
  		   	<ul className={"sidebar-nav"}>
  			   	<li className={"sidebar-brand"}>
- 				   	<a href={"#"}>
+ 				   	<a href={window.location.origin}>
  					   	GOAL Team
  				   	</a>
  			   	</li>
