@@ -1,0 +1,56 @@
+# Specifically fine tune for NeCTAR Ubuntu 16.04 Cloud Image
+# You may need to change these for your environment.
+#     setup webapp, analyzer and harvester
+- hosts: appservers
+  vars:
+    git_base: /home/ubuntu
+    git_repo: 'git@github.com:victorskl/goal.git'
+    web_js_compile: node_modules/.bin/webpack --config webpack.config.js
+    django_server_run: python3 manage.py runserver 0.0.0.0:8000
+  tasks:
+    - name: System Update
+      apt:
+        update_cache: yes
+        upgrade: dist
+      become: true
+
+    - name: Setup Build Environment
+      apt:
+        name:
+          - git
+          - python3-pip
+          - npm
+          - nodejs-legacy
+        state: latest
+        install_recommends: no
+      become: true
+
+    - name: Python3 Libs
+      pip:
+        name:
+          - django
+          - django-webpack-loader
+        executable: pip3
+      become: true
+
+    - name: Clone from GitHub Repo
+      git:
+        repo: "{{ git_repo }}"
+        dest: "{{ git_base }}/goal"
+        clone: yes
+        accept_hostkey: yes
+        key_file: "{{ git_base }}/.ssh/id_rsa"
+        force: yes
+      become: true
+
+    - name: Compile javascript for webapp
+      command: "{{ item }} chdir={{ git_base }}/goal/webapp/"
+      with_items:
+      - npm install
+      - "{{ web_js_compile }}"
+      become: true
+
+    - name: Run Django on 8000
+      shell: nohup {{ django_server_run }} &
+      args:
+          chdir: "{{ git_base }}/goal/webapp/"
