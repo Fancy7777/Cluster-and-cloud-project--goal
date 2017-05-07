@@ -1,0 +1,51 @@
+{% extends "./base.html" %}
+{% block content %}
+	<!-- side bar inspired from -->
+	<!-- https://github.com/BlackrockDigital/startbootstrap-simple-sidebar -->
+
+<div id="wrapper" class="toggled">
+	<!-- Sidebar -->
+	<div id="sidebar-wrapper"> </div>
+
+	<div id="page-content-wrapper">
+		<h1> GOAL Team </h1>
+		<h2> GOAL project description </h2>
+
+		<p class="lead">
+			This is a project for Clusters and Cloud Computing subject in University of Melbourne.
+		</p>
+
+		<br/>
+
+		<p class="lead">
+			We built harveter to grab tweets and store them in CouchDB, after that we use
+			distribtued MapReduce approch to process the data to perform sentiment anlaysis for the
+			topics, crime detection and the positive rate of people supporting Trump.
+		</p>
+
+		</br >
+
+		<p class="lead">
+			There is an Automator made to automatically boot and setup instances with CouchDB as our
+			base infrastructures with Boto and Ansible. The web application, sentiment analyzer
+			program, twitter harvesters are also deployed in an automatic way.
+		</p>
+
+		<h2> Team Members </h2>
+	    <div class="row">
+	        <div class="col-md-8">
+	            <table class="table table-bordered">
+
+	                {% for one_team_mate_name, one_team_mate_email in team_mates.items %}
+	                    <tr>
+	                        <td>{{ one_team_mate_name }}</td>
+	                        <td>{{ one_team_mate_email}}</td>
+	                    </tr>
+	                {% endfor %}
+	            </table>
+	        </div>
+	    </div>
+
+	</div>
+</div>
+{% endblock %}

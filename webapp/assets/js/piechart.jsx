@@ -1,51 +1,72 @@
 "use strict"
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Chartist from 'chartist'
+// import Highcharts from 'highcharts'
+
+// Inspired from https://www.highcharts.com/demo/pie-basic
 
 class PieChart extends React.Component {
 
 	constructor(props) {
     	super(props)
 		this.chart = null
-		this.position = 0
-		this.sum = this.props.chartData.series.reduce((a, b) => { return a + b }, 0)
-		this.updateChart = this.updateChart.bind(this)
 	}
 
 
 	componentDidMount() {
-		// chartData {labels: [], series []}
-
-		this.options = {
-			// this will get value from labels
-			labelInterpolationFnc:(label) => {
-					let tempSerieValue = this.props.chartData.series[this.position]
-					console.log( "tempSerieValue => " + tempSerieValue + " label => " + label + " sum => " + this.sum)
-					let tempLable =  label + " " + (Math.round((tempSerieValue / this.sum) * 100)) + '%'
-					this.position += 1
-					if (this.position >= this.props.chartData.series.length)
-					{
-						this.position = 0
-					}
-					return tempLable
-				}
-		}
-		this.chart = new Chartist.Pie('#' + this.props.chartId,
-			this.props.chartData, this.options)
-		// unresigter all events
-		// this.chart.update(this.props.chartData, this.options, true)
+		this.chart = Highcharts.chart(this.props.chartId, {
+		    chart: {
+		        plotBackgroundColor: null,
+		        plotBorderWidth: null,
+		        plotShadow: false,
+		        type: 'pie'
+		    },
+		    title: {
+		        text: this.props.title
+		    },
+		    tooltip: {
+		        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+		    },
+		    plotOptions: {
+		        pie: {
+		            allowPointSelect: true,
+		            cursor: 'pointer',
+		            dataLabels: {
+		                enabled: true,
+		                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+		                style: {
+		                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+		                }
+		            }
+		        }
+		    },
+		    series: [{
+		        name: 'Brands',
+		        colorByPoint: true,
+		        data: [{
+		            name: 'Microsoft Internet Explorer',
+		            y: 56.33
+		        }, {
+		            name: 'Chrome',
+		            y: 24.03,
+		            sliced: true,
+		            selected: true
+		        }, {
+		            name: 'Firefox',
+		            y: 10.38
+		        }, {
+		            name: 'Safari',
+		            y: 4.77
+		        }, {
+		            name: 'Opera',
+		            y: 0.91
+		        }, {
+		            name: 'Proprietary or Undetectable',
+		            y: 0.2
+		        }]
+		    }]
+		})
 	}
-
-	updateChart()
-	{
-		if (this.chart != null)
-		{
-			this.chart.update(this.props.chartData, this.options, false)
-		}
-
-	}
-
 
 	render() {
 		return(

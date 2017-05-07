@@ -17,13 +17,6 @@ class Tab extends React.Component {
 		// this.hideAll()
 		// setTimeout(this.hideAll(),5000)
 	}
-	hideAll() {
-	    let i, tabcontent;
-	    tabcontent = document.getElementsByClassName("tabcontent");
-	    for (i = 0; i < tabcontent.length; i++) {
-	        tabcontent[i].style.display = "none";
-	    }
-	}
 
 	openTab(evt, tabName, elem) {
 	    let i, tabcontent, tablinks;
@@ -41,9 +34,13 @@ class Tab extends React.Component {
 	    evt.currentTarget.className += " active";
 		// console.log("char id " + elem.props.chartId)
 		// force the charts to call update()
-		document.getElementById(elem.props.chartId).click()
+
+		// for chartist to re render
+		// document.getElementById(elem.props.chartId).click()
 		// elem.updateChart()
 	}
+
+
 
 	render() {
 		// console.log("children title=> " + this.props.children.title)
