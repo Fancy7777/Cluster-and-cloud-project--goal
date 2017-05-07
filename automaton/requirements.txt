@@ -1,5 +1,3 @@
-tweepy==3.5.0
-CouchDB==1.1
 boto==2.46.1
 colorama
 ansible
