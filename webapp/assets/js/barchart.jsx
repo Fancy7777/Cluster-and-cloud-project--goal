@@ -13,11 +13,106 @@ class BarChart extends React.Component {
 		this.chart = null
 		this.barDistance = 10
 		this.updateChart = this.updateChart.bind(this)
-		this.options = {}
+		this.fetchOptions = {
+			method: 'GET',
+			mode: 'cors',
+			cache: 'default'
+		}
 		this.plain = this.plain.bind(this)
 		this.inverted = this.inverted.bind(this)
 		this.polar = this.polar.bind(this)
+		this.mapReduceMajorCityView = "http://115.146.94.41:5000/tweet_raw_trump/_design/trump_by_major_city/_view/trump_by_major_city"
 	}
+
+	fetchJsonData(url) {
+		let json_data = fetch(url, this.fetchOptions)
+			.then((response) => {return response.json()})
+			.then((json) => {
+				let majorCityData = this.processMajorCityJsonToDrawingData(json)
+
+				// chartData {labels: [], series [[]...]}
+				this.chart = Highcharts.chart(this.props.chartId, {
+				    chart: {
+				        type: 'column'
+				    },
+				    title: {
+				        text: "Sentimen Analysis of people's attitudes for Trump"
+				    },
+				    subtitle: {
+				        text: 'Source: www.twitter.com'
+				    },
+				    xAxis: {
+				        // categories: [
+						// 	// this.props.categories
+						// 	"Positive", "Negative", "Compound", "Neutral"
+				        // ],
+						categories: majorCityData["categories"],
+				        crosshair: true
+				    },
+				    yAxis: {
+				        min: 0,
+				        title: {
+				            text: 'number'
+				        }
+				    },
+				    tooltip: {
+				        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+				        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+				            '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>', // can add unit after {point.y:.1f}
+				        footerFormat: '</table>',
+				        shared: true,
+				        useHTML: true
+				    },
+				    plotOptions: {
+				        column: {
+				            pointPadding: 0.2,
+				            borderWidth: 0
+				        }
+				    },
+				    series: majorCityData["dataSeries"]
+				})
+
+
+			} )
+			.catch((ex) => { console.log(' fetchJsonData => get json_data failed ', ex)
+			})
+	}
+
+	processMajorCityJsonToDrawingData(majorCityJsonData) {
+
+		console.log(" majorCityJsonData => " + Object.keys(majorCityJsonData))
+
+		let values = majorCityJsonData.rows[0].value
+		let cityKeySet = Object.keys(values)
+		console.log(" cityKeySet => " + cityKeySet)
+		let sentimentTagCategories = Object.keys(values[cityKeySet[0]])
+		console.log(" sentimentTagCategories => " + sentimentTagCategories)
+		let processedData = {}
+
+		for(let i = 0; i < cityKeySet.length; i++) {
+			processedData[cityKeySet[i]] = []
+		}
+
+		for (let i = 0; i < cityKeySet.length; i++) {
+			for (let j = 0; j < sentimentTagCategories.length; j++) {
+				processedData[cityKeySet[i]].push(values[cityKeySet[i]][sentimentTagCategories[j]])
+			}
+		}
+
+
+
+		let dataSeries = []
+
+
+		for(let i = 0; i < cityKeySet.length; i++) {
+			dataSeries.push({"name": cityKeySet[i], "data": processedData[cityKeySet[i]]})
+		}
+		console.log(" dataSeries name => " + dataSeries[0]["name"])
+		console.log(" dataSeries data => " + dataSeries[0]["data"])
+
+		return {"categories": sentimentTagCategories, "dataSeries":dataSeries}
+	}
+
 
 	plain() {
 	    this.chart.update({
@@ -56,28 +151,8 @@ class BarChart extends React.Component {
 	}
 
 	componentDidMount() {
-		// chartData {labels: [], series [[]...]}
-		this.chart = Highcharts.chart(this.props.chartId, {
-		    title: {
-		        text: 'Chart.update'
-		    },
+		this.fetchJsonData(this.mapReduceMajorCityView)
 
-		    subtitle: {
-		        text: 'Plain'
-		    },
-
-		    xAxis: {
-		        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-		    },
-
-		    series: [{
-		        type: 'column',
-		        colorByPoint: true,
-		        data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
-		        showInLegend: false
-		    }]
-
-		})
 	}
 
 
