@@ -1,9 +1,11 @@
 /* Inspired from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_tabs_open */
 /* Style the tab */
+
 div.tab-button {
     overflow: hidden;
     border: 1px solid #ccc;
     background-color: #f1f1f1;
+    margin-top: 20px;
 }
 
 /* Style the buttons inside the tab */
@@ -35,3 +37,5 @@ div.tab-button button.active {
     border: 1px solid #ccc;
     border-top: none;
 }
+
+

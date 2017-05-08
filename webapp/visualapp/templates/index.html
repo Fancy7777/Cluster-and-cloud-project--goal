@@ -2,14 +2,39 @@
 {% block content %}
 	<!-- side bar inspired from -->
 	<!-- https://github.com/BlackrockDigital/startbootstrap-simple-sidebar -->
+<head>
+	<link rel="stylesheet" href="../static/css/style.css" media="screen"/>
+	
+</head>
+
+<body>
 
 <div id="wrapper" class="toggled">
-	<!-- Sidebar -->
-	<div id="sidebar-wrapper"> </div>
 
-	<div id="tabs">
-	</div>
+		<div id="sidebar-wrapper"> </div>
 
+
+<!-- header show page -->	
+	<script src="../static/js/script.js"></script>
+		<div id="wrapper">
+			<div id="header" class="content-block header-wrapper">
+				<div class="header-wrapper-inner">
+					<section class="center">
+						<div class="slogan">
+							GOAL
+						</div>
+						<div class="secondary-slogan">
+							Project by:
+								Victor, Derek, Alan, Bing, Peter
+						</div>
+					</section>
+				</div>
+			</div><!-- header -->
+		</div>
+<!-- chart part -->	
+	<div id="tabs"></div>
+
+<!-- other part -->	
 	<div id="page-content-wrapper">
 		<h1> GOAL Project </h1>
 	    <p>Our Goal is to get H1 with our GOAL project :] </p>
@@ -27,7 +52,14 @@
 	        </div>
 	    </div>
 	    <div id="container"></div>
-		<div id="twitter"></div>
+
+	    <!-- streaming twitter -->
+	    <div class="content-block parallax" id="parallax">
+				<div class="container text-center">
+					<div id="twitter"></div>
+			</div>
+		</div>
+		
 		<div id="map-outer" style="height:300px;width:300px;position:relative"> </div>
 		<div id="charts"></div>
 		<div class="ct-chart ct-golden-section" id="chart1"></div>
@@ -35,5 +67,14 @@
 		<div class="ct-chart ct-golden-section" id="chart3"></div>
 
 	</div>
-</div>
+
+</div>	
+</body>	
+
+
+
+
+
+	
+
 {% endblock %}
