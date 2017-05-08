@@ -12,7 +12,7 @@ class LineChart extends React.Component {
 	constructor(props) {
     	super(props)
 		this.chart = null
-
+		this.updateChart = this.updateChart.bind(this)
 
 	}
 
@@ -72,6 +72,14 @@ class LineChart extends React.Component {
 
 	}
 
+	updateChart() {
+		if (this.chart != null) {
+			console.log("reflow")
+			this.chart.reflow()
+			this.chart.redraw()
+		}
+
+	}
 
 	render() {
 		return(
