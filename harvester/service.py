@@ -45,8 +45,8 @@ class TweetHarvestingService(object):
             # Add sentiment analysis tag if a keyword present
             match = re.findall(keyword, tweet['text'])
             if match:
-                result = sort_ordered_dict(sid.polarity_scores(tweet['text']))
-                tweet.update({tag: result.keys()[0]})
+                result = sort_ordered_dict(sid.polarity_scores(tweet['text'])).keys()[0]
+                tweet.update({tag: str(result)})
 
             _id, _rev = self.repo.store(tweet)
             print('id: {}  rev: {}'.format(_id, _rev))
