@@ -1,0 +1,40 @@
+- hosts: master
+  vars:
+    # common install base
+    install_base: mnt
+  tasks:
+
+#    - name: Source Sys Env
+#      shell: source /etc/environment
+#      args:
+#        executable: /bin/bash
+
+#    - name : Java -version
+#      shell: echo $PATH
+
+#    - name: Scala -version
+#      command: which scala
+#
+#    - name : pyspark --version
+#      command: which pyspark
+
+    # this part didn't work, setup password-less ssh for user ubuntu and start manual
+
+#    - name: Install Spark Service
+#      copy:
+#        src: ./spark.service
+#        dest: /etc/systemd/system/spark.service
+#        owner: root
+#        group: root
+#        mode: 0644
+#
+#    - name: Enable Spark Service
+#      systemd:
+#        daemon-reload: yes
+#        name: spark
+#        enabled: yes
+#
+#    - name: Start Spark Service
+#      systemd:
+#        name: spark
+#        state: started
