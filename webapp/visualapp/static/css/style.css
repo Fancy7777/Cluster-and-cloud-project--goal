@@ -116,7 +116,7 @@ body{
 	padding: 60px 0;
 }
 .parallax{
-	padding: 80px 0;
+	padding: 0px 0;
 }
 
 .block-body {
@@ -128,12 +128,11 @@ body{
 	color: white;
 }
 #parallax {
-	background-image: url(../images/blue_mac2.jpg) ;
-	color: white;
+	background-image: url(../images/kuang.png) ;
 	background-size: cover;
 	display: table;
-	height: 100vh;
-	width: 100%;
+	height: 20px;
+	width: 20px;
 	position: relative;
 	z-index: 1;
 	overflow-x: hidden; 
@@ -142,5 +141,27 @@ body{
 #parallax h1{
 	margin-bottom: 60px;
 	color: white;
+}
+
+@media (min-width: 1200px){
+	.container {
+    	width: 400px;
+    	height: 100px;
+    	font-size: 20px;
+    	text-align: left;
+	}
+}
+
+.h2, h2 {
+    font-size: 4px;
+
+}
+
+
+#footer{ 
+	background: #2B3E51; 
+	color: white;
+	height: 5px;
+	padding-left: 900px;
 }
 
