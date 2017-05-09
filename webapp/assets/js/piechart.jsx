@@ -12,7 +12,7 @@ class PieChart extends React.Component {
 		this.chart = null
 		// http://cadmin:qwerty8888@115.146.94.41:5000/tweet_raw/
 		this.myHeaders = new Headers({
-			  "Authorization": "Basic " + btoa("cadmin" + ":" + "qwerty8888"),
+			  "Authorization": "Basic " + btoa("cuser" + ":" + "JumpyMonk3y"),
 			});
 			// btoa(username + ":" + password)
 		this.mapReduceMajorCityView = "http://115.146.94.41:5000/tweet_raw_trump/_design/trump_by_major_city/_view/trump_by_major_city"

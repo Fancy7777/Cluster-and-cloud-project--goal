@@ -13,10 +13,15 @@ class BarChart extends React.Component {
 		this.chart = null
 		this.barDistance = 10
 		this.updateChart = this.updateChart.bind(this)
+		this.myHeaders = new Headers({
+			  "Authorization": "Basic " + btoa("cuser" + ":" + "JumpyMonk3y"),
+			});
+			// btoa(username + ":" + password)
 		this.fetchOptions = {
 			method: 'GET',
 			mode: 'cors',
-			cache: 'default'
+			cache: 'default',
+			headers: this.myHeaders
 		}
 		this.aurinDataBachelor = {
 			"sydney": 43040,
