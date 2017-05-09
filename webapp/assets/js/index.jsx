@@ -84,8 +84,8 @@ if (document.getElementById('twitter')) {
 if (document.getElementById('tabs')) {
 ReactDOM.render(
 				<Tab >
-					<LineChart chartId={"mychart3"} title={"Line Chart tab"} chartData={data}/>
-					<BarChart chartId={"mychart4"} title={"Bar Chart tab"} chartData={data}/>
-					<PieChart chartId={"mychart5"} title={"Pie Chart tab"} chartData={dataPie}/>
+					<LineChart chartId={"mychart3"} title={"Line Chart"} chartData={data}/>
+					<BarChart chartId={"mychart4"} title={"Bar Chart"} chartData={data}/>
+					<PieChart chartId={"mychart5"} title={"Pie Chart"} chartData={dataPie}/>
 				</Tab>, document.getElementById('tabs'))
 }
