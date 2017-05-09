@@ -16,6 +16,7 @@ class PieChart extends React.Component {
 			});
 			// btoa(username + ":" + password)
 		this.mapReduceMajorCityView = "http://115.146.94.41:5000/tweet_raw_trump/_design/trump_by_major_city/_view/trump_by_major_city"
+		// this.mapReduceMajorCityView = "http://115.146.94.41:5000/tweet_raw/_design/trump_by_major_city/_view/trump_by_major_city?reduce=true"
 		this.fetchOptions = {
 			method: 'GET',
 			mode: 'cors',
@@ -38,16 +39,22 @@ class PieChart extends React.Component {
 				        plotBackgroundColor: null,
 				        plotBorderWidth: null,
 				        plotShadow: false,
-				        type: 'pie'
+				        type: 'pie',
+				        options3d: {
+				            enabled: true,
+				            alpha: 45
+				        }
 				    },
 				    title: {
-				        text: this.props.title
+				        text: "Postive and negative attutide rate in Australia's major city"
 				    },
 				    tooltip: {
 				        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
 				    },
 				    plotOptions: {
 				        pie: {
+							innerSize: 100,
+				            depth: 45,
 				            allowPointSelect: true,
 				            cursor: 'pointer',
 				            dataLabels: {
@@ -117,7 +124,8 @@ class PieChart extends React.Component {
 		let dataSeriesTemp = []
 		let pos_index = 0
 		let pieSize = 150
-		let gap = pieSize/2
+		let gap = pieSize
+		let gapY = pieSize/2
 		let numRow = 5
 		let numDraw = 0
 		for (let j = 0; j < cityKeySet.length; j++) {
@@ -145,7 +153,7 @@ class PieChart extends React.Component {
 			        //     color: Highcharts.getOptions().colors[1] // John's color
 			        // }],
 					data: [],
-			        center: [gap + pieSize * pos_index, gap + (pieSize * Math.floor(numDraw/numRow))],
+			        center: [gap + pieSize * pos_index, gapY + (pieSize * Math.floor(numDraw/numRow))],
 			        size: pieSize,
 			        showInLegend: false,
 			        dataLabels: {
@@ -174,6 +182,7 @@ class PieChart extends React.Component {
 	}
 
 	updateChart() {
+
 		if (this.chart != null) {
 			console.log("reflow")
 			this.chart.destroy()
@@ -185,7 +194,8 @@ class PieChart extends React.Component {
 	render() {
 		return(
 			<div>
-					<div className={"charts"} id={this.props.chartId} onClick={this.updateChart}></div>
+					<div className={"charts"} id={this.props.chartId} ></div>
+					<button className={"btn btn-primary"} type={"button"} id={"button-chart-" + this.props.chartId} onClick={this.updateChart}>Refresh</button>
 			</div>
 
 		)

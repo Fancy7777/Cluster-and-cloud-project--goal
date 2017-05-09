@@ -90,7 +90,8 @@ class LineChart extends React.Component {
 	render() {
 		return(
 			<div>
-					<div className={"charts"} id={this.props.chartId} onClick={this.updateChart}></div>
+					<div className={"charts"} id={this.props.chartId}></div>
+					<button className={"btn btn-primary"} type={"button"} id={"button-chart-" + this.props.chartId} onClick={this.updateChart}>Refresh</button>
 			</div>
 
 		)

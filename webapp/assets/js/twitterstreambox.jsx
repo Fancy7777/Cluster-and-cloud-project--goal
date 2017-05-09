@@ -83,7 +83,7 @@ class TwitterStreamBox extends React.Component {
 
 	render() {
 		return(
-			<h2> Stream Tweet: <br/> {this.state.date} </h2>
+			<h2> {this.state.date} </h2>
 		)
 	}
 }
