@@ -125,8 +125,8 @@ if (document.getElementById('tabs')) {
 ReactDOM.render(
 				<Tab >
 					<BarChart chartId={"mychart4"} title={"Bar Chart Bachelor"} chartTitle={chartTitleHuamn} need={"sumd"} chartDataName={aurinDataHumanCaptialName} chartData={aurinDataHumanCaptial}/>
-					<BarChart chartId={"mychart5"} title={"Bar Chart Manager"} chartTitle={chartTitleLabor1} need={"d100"} chartDataName={aurinDataLabor1Name} chartData={aurinDataLabor1}/>
-					<BarChart chartId={"mychart6"} title={"Bar Chart Unskilled"} chartTitle={chartTitleLabor2} need={"d100"} chartDataName={aurinDataLabor2Name} chartData={aurinDataLabor2}/>
+					<BarChart chartId={"mychart5"} title={"Bar Chart Unskilled"} chartTitle={chartTitleLabor1} need={"d100"} chartDataName={aurinDataLabor1Name} chartData={aurinDataLabor1}/>
+					<BarChart chartId={"mychart6"} title={"Bar Chart Manager"} chartTitle={chartTitleLabor2} need={"d100"} chartDataName={aurinDataLabor2Name} chartData={aurinDataLabor2}/>
 					<PieChart chartId={"mychart7"} title={"Pie Chart"} chartData={dataPie}/>
 				</Tab>, document.getElementById('tabs'))
 }
