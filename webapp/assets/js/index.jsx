@@ -81,11 +81,52 @@ if (document.getElementById('twitter')) {
 // ReactDOM.render(<ChartsMultiple />, document.getElementById('charts'))
 // ReactDOM.render(<HeatMapBox title={"Heat Map"} mapboxAccessUrl={mapboxAccess} mapid={mapid}/>, document.getElementById('map-outer'))
 
+let aurinDataHumanCaptialName = "bachelor"
+let chartTitleHuamn = "Sentimen Analysis of people's postive and negative attitude rate for Trump vs bachelor rate of each Australia's major city"
+let aurinDataHumanCaptial = {
+		"sydney": 43040,
+		"melbourne": 25532,
+		"adelaide": 4490,
+		"brisbane": 173233,
+		"canberra": 61827,
+		"darwin": 8755,
+		"hobart": 9901,
+		"perth": 4199
+	}
+let aurinDataLabor1Name = "unskilled"
+let chartTitleLabor1 = "Sentimen Analysis of people's postive and negative attitude rate for Trump vs unskilled worker rate of each Australia's major city"
+let aurinDataLabor1 = {
+	"adelaide": 6.334666495,
+	"melbourne": 4.470647406,
+	"sydney": 5.683079863,
+	"perth": 8.431044109,
+	"darwin": 12.22276001,
+	"brisbane":12.65861759,
+	"hobart":6.498422713,
+	"canberra":0
+}
+
+let aurinDataLabor2Name = "manager"
+let chartTitleLabor2 = "Sentimen Analysis of people's postive and negative attitude rate for Trump vs manager rate of each Australia's major city"
+let aurinDataLabor2 = {
+	"adelaide": 48.92271965,
+	"melbourne": 49.15476822,
+	"sydney": 46.27927393,
+	"perth": 45.63558533,
+	"darwin": 30.24798565,
+	"brisbane": 33.15673842,
+	"hobart": 42.98212408,
+	"canberra":0
+}
+
+
 if (document.getElementById('tabs')) {
 ReactDOM.render(
 				<Tab >
-					<LineChart chartId={"mychart3"} title={"Line Chart"} chartData={data}/>
-					<BarChart chartId={"mychart4"} title={"Bar Chart"} chartData={data}/>
-					<PieChart chartId={"mychart5"} title={"Pie Chart"} chartData={dataPie}/>
+					// <LineChart chartId={"mychart3"} title={"Line Chart"} chartData={data}/>
+					<BarChart chartId={"mychart4"} title={"Bar Chart Bachelor"} chartTitle={chartTitleHuamn} need={"sumd"} chartDataName={aurinDataHumanCaptialName} chartData={aurinDataHumanCaptial}/>
+					<BarChart chartId={"mychart5"} title={"Bar Chart Manager"} chartTitle={chartTitleLabor1} need={"d100"} chartDataName={aurinDataLabor1Name} chartData={aurinDataLabor1}/>
+					<BarChart chartId={"mychart6"} title={"Bar Chart Unskilled"} chartTitle={chartTitleLabor2} need={"d100"} chartDataName={aurinDataLabor2Name} chartData={aurinDataLabor2}/>
+					<PieChart chartId={"mychart7"} title={"Pie Chart"} chartData={dataPie}/>
 				</Tab>, document.getElementById('tabs'))
 }

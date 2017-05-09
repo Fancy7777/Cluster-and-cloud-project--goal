@@ -52,7 +52,7 @@ class BarChart extends React.Component {
 				        type: 'column'
 				    },
 				    title: {
-				        text: "Sentimen Analysis of people's postive and negative attitude rates for Trump vs bachelor rate of each Australia's major city"
+				        text: this.props.chartTitle
 				    },
 				    subtitle: {
 				        text: 'Source: www.twitter.com'
@@ -114,22 +114,27 @@ class BarChart extends React.Component {
 		let dataSeries = []
 		let sumSentiment = {"pos":0, "neg": 0}
 
-		let aurinDataBachelorSum = 0
-
-
-		for (let i = 0; i < cityKeySet.length; i++) {
-			aurinDataBachelorSum += this.aurinDataBachelor[cityKeySet[i]]
-			console.log("aurinDataBachelorSum => " + aurinDataBachelorSum)
+		if(this.props.need == "sumd") {
+			let aurinDataSum = 0
+			for (let i = 0; i < cityKeySet.length; i++) {
+				aurinDataSum += this.props.chartData[cityKeySet[i]]
+				console.log("aurinDataBachelorSum => " + aurinDataSum)
+			}
+			let aurinDataInGraph = []
+			for(let i = 0; i < cityKeySet.length; i++) {
+				console.log("bachelor rate => " + this.props.chartData[cityKeySet[i]]/aurinDataSum)
+				aurinDataInGraph.push(this.props.chartData[cityKeySet[i]]/aurinDataSum)
+			}
+			dataSeries.push({"type":"column", "name": this.props.chartDataName, "data": aurinDataInGraph, colorIndex:5})
+		} else if ( this.props.need == "d100") {
+			let aurinDataInGraph = []
+			for(let i = 0; i < cityKeySet.length; i++) {
+				console.log("bachelor rate => " + this.props.chartData[cityKeySet[i]]/100)
+				aurinDataInGraph.push(this.props.chartData[cityKeySet[i]]/100)
+			}
+			dataSeries.push({"type":"column", "name": this.props.chartDataName, "data": aurinDataInGraph, colorIndex:5})
 		}
 
-		let aurinDataBachelorInGraph = []
-
-		for(let i = 0; i < cityKeySet.length; i++) {
-			console.log("bachelor rate => " + this.aurinDataBachelor[cityKeySet[i]]/aurinDataBachelorSum)
-			aurinDataBachelorInGraph.push(this.aurinDataBachelor[cityKeySet[i]]/aurinDataBachelorSum)
-		}
-
-		dataSeries.push({"type":"column", "name": "bachelor", "data": aurinDataBachelorInGraph, colorIndex:5})
 
 
 		for(let i = 0; i < sentimentTagCategories.length; i++) {
