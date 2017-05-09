@@ -175,6 +175,7 @@ class PieChart extends React.Component {
 	}
 
 	updateChart() {
+
 		if (this.chart != null) {
 			console.log("reflow")
 			this.chart.destroy()
@@ -186,7 +187,8 @@ class PieChart extends React.Component {
 	render() {
 		return(
 			<div>
-					<div className={"charts"} id={this.props.chartId} onClick={this.updateChart}></div>
+					<div className={"charts"} id={this.props.chartId} ></div>
+					<button className={"btn btn-primary"} type={"button"} id={"button-chart-" + this.props.chartId} onClick={this.updateChart}>Refresh</button>
 			</div>
 
 		)

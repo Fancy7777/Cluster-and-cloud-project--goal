@@ -233,10 +233,11 @@ class BarChart extends React.Component {
 	render() {
 		return(
 			<div>
-					<div className={"charts"+this.props.chartId} id={this.props.chartId} onClick={this.updateChart}></div>
+					<div className={"charts"+this.props.chartId} id={this.props.chartId}></div>
 						<button className={"btn btn-primary"} type={"button"} id={"plain-"+this.props.chartId} onClick={this.plain}>Plain</button>
 						<button className={"btn btn-primary"} type={"button"} id={"inverted-"+this.props.chartId} onClick={this.inverted}>Inverted</button>
 						<button className={"btn btn-primary"} type={"button"} id={"polar-"+this.props.chartId} onClick={this.polar}>Polar</button>
+						<button className={"btn btn-primary"} type={"button"} id={"button-chart-" + this.props.chartId} onClick={this.updateChart}>Refresh</button>
 			</div>
 
 		)

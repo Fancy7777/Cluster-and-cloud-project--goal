@@ -36,7 +36,7 @@ class Tab extends React.Component {
 		// force the charts to call update()
 
 		// for chartist to re render
-		document.getElementById(elem.props.chartId).click()
+		document.getElementById("button-chart-"+elem.props.chartId).click()
 		// elem.updateChart()
 	}
 
