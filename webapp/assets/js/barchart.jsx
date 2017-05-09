@@ -37,6 +37,7 @@ class BarChart extends React.Component {
 		this.inverted = this.inverted.bind(this)
 		this.polar = this.polar.bind(this)
 		this.mapReduceMajorCityView = "http://115.146.94.41:5000/tweet_raw_trump/_design/trump_by_major_city/_view/trump_by_major_city"
+		// this.mapReduceMajorCityView = "http://115.146.94.41:5000/tweet_raw/_design/trump_by_major_city/_view/trump_by_major_city?reduce=true"
 		this.updateChart = this.updateChart.bind(this)
 		this.majorCityData = null
 	}

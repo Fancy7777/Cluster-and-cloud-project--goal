@@ -16,6 +16,7 @@ class PieChart extends React.Component {
 			});
 			// btoa(username + ":" + password)
 		this.mapReduceMajorCityView = "http://115.146.94.41:5000/tweet_raw_trump/_design/trump_by_major_city/_view/trump_by_major_city"
+		// this.mapReduceMajorCityView = "http://115.146.94.41:5000/tweet_raw/_design/trump_by_major_city/_view/trump_by_major_city?reduce=true"
 		this.fetchOptions = {
 			method: 'GET',
 			mode: 'cors',
