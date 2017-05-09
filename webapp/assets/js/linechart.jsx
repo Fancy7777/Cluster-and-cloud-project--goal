@@ -13,6 +13,7 @@ class LineChart extends React.Component {
     	super(props)
 		this.chart = null
 		this.updateChart = this.updateChart.bind(this)
+		this.chartOption = null
 
 	}
 
@@ -25,7 +26,8 @@ class LineChart extends React.Component {
 		// chartData {labels: [], series [[]...]}
 		// this.chart = new Chartist.Line('#' + this.props.chartId, this.props.chartData)
 
-		this.chart = Highcharts.chart(this.props.chartId, {
+
+		this.chartOption = {
 		    title: {
 		        text: this.props.title
 		    },
@@ -68,15 +70,19 @@ class LineChart extends React.Component {
 		        data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
 		    }]
 
-		})
+		}
+
+		this.chart = Highcharts.chart(this.props.chartId, this.chartOption)
 
 	}
 
 	updateChart() {
 		if (this.chart != null) {
 			console.log("reflow")
-			this.chart.reflow()
-			this.chart.redraw()
+			// this.chart.reflow()
+			// this.chart.redraw()
+			this.chart.destroy()
+			this.chart = Highcharts.chart(this.props.chartId, this.chartOption)
 		}
 
 	}
@@ -84,7 +90,6 @@ class LineChart extends React.Component {
 	render() {
 		return(
 			<div>
-					<h2> {this.props.title} </h2>
 					<div className={"charts"} id={this.props.chartId} onClick={this.updateChart}></div>
 			</div>
 

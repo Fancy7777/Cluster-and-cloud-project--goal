@@ -13,10 +13,15 @@ class BarChart extends React.Component {
 		this.chart = null
 		this.barDistance = 10
 		this.updateChart = this.updateChart.bind(this)
+		this.myHeaders = new Headers({
+			  "Authorization": "Basic " + btoa("cuser" + ":" + "JumpyMonk3y"),
+			});
+			// btoa(username + ":" + password)
 		this.fetchOptions = {
 			method: 'GET',
 			mode: 'cors',
-			cache: 'default'
+			cache: 'default',
+			headers: this.myHeaders
 		}
 		this.aurinDataBachelor = {
 			"sydney": 43040,
@@ -33,16 +38,15 @@ class BarChart extends React.Component {
 		this.polar = this.polar.bind(this)
 		this.mapReduceMajorCityView = "http://115.146.94.41:5000/tweet_raw_trump/_design/trump_by_major_city/_view/trump_by_major_city"
 		this.updateChart = this.updateChart.bind(this)
+		this.majorCityData = null
 	}
 
 	fetchJsonData(url) {
 		let json_data = fetch(url, this.fetchOptions)
 			.then((response) => {return response.json()})
 			.then((json) => {
-				let majorCityData = this.processMajorCityJsonToDrawingData(json)
-
-				// chartData {labels: [], series [[]...]}
-				this.chart = Highcharts.chart(this.props.chartId, {
+				this.majorCityData = this.processMajorCityJsonToDrawingData(json)
+				this.chartOption = {
 				    chart: {
 				        type: 'column'
 				    },
@@ -53,12 +57,7 @@ class BarChart extends React.Component {
 				        text: 'Source: www.twitter.com'
 				    },
 				    xAxis: {
-				        // categories: [
-						// 	// this.props.categories
-						// 	"Positive", "Negative", "Compound", "Neutral"
-				        // ],
-						categories: majorCityData["categories"],
-
+						categories: this.majorCityData["categories"],
 				        crosshair: true
 				    },
 				    yAxis: {
@@ -81,11 +80,10 @@ class BarChart extends React.Component {
 				            borderWidth: 0
 				        }
 				    },
-				    series: majorCityData["dataSeries"]
-				})
-
-
-			} )
+				    series: this.majorCityData["dataSeries"]
+				}
+				// chartData {labels: [], series [[]...]}
+				this.chart = Highcharts.chart(this.props.chartId, this.chartOption)})
 			.catch((ex) => { console.log(' fetchJsonData => get json_data failed ', ex)
 			})
 	}
@@ -185,7 +183,8 @@ class BarChart extends React.Component {
 	        },
 	        subtitle: {
 	            text: 'Plain'
-	        }
+	        },
+			series: this.majorCityData
 		})
 	}
 
@@ -197,7 +196,8 @@ class BarChart extends React.Component {
 	        },
 	        subtitle: {
 	            text: 'Inverted'
-	        }
+	        },
+			series: this.majorCityData
     	})
 	}
 
@@ -222,8 +222,8 @@ class BarChart extends React.Component {
 	updateChart() {
 		if (this.chart != null) {
 			console.log("reflow")
-			this.chart.reflow()
-			this.chart.redraw()
+			this.chart.destroy()
+			this.chart = Highcharts.chart(this.props.chartId, this.chartOption)
 		}
 
 	}
@@ -232,7 +232,6 @@ class BarChart extends React.Component {
 	render() {
 		return(
 			<div>
-					<h2> {this.props.title} </h2>
 					<div className={"charts"+this.props.chartId} id={this.props.chartId} onClick={this.updateChart}></div>
 						<button className={"btn btn-primary"} type={"button"} id={"plain-"+this.props.chartId} onClick={this.plain}>Plain</button>
 						<button className={"btn btn-primary"} type={"button"} id={"inverted-"+this.props.chartId} onClick={this.inverted}>Inverted</button>

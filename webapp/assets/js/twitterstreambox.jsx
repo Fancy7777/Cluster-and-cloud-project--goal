@@ -75,7 +75,7 @@ class TwitterStreamBox extends React.Component {
 				else {
 					this.skip = 0
 				}
-		    	this.setState({ date: `Tweet text => ${text}, Place => ${placeName}`})})
+		    	this.setState({ date: `${text}`})})
 			.catch((ex) => {
 		    	console.log('parsing failed', ex)
 		  	})

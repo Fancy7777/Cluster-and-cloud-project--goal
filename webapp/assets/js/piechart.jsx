@@ -10,8 +10,21 @@ class PieChart extends React.Component {
 	constructor(props) {
     	super(props)
 		this.chart = null
+		// http://cadmin:qwerty8888@115.146.94.41:5000/tweet_raw/
+		this.myHeaders = new Headers({
+			  "Authorization": "Basic " + btoa("cuser" + ":" + "JumpyMonk3y"),
+			});
+			// btoa(username + ":" + password)
 		this.mapReduceMajorCityView = "http://115.146.94.41:5000/tweet_raw_trump/_design/trump_by_major_city/_view/trump_by_major_city"
+		this.fetchOptions = {
+			method: 'GET',
+			mode: 'cors',
+			cache: 'default',
+			headers: this.myHeaders
+		}
+
 		this.updateChart = this.updateChart.bind(this)
+		this.chartOption = null
 	}
 
 	fetchJsonData(url) {
@@ -20,8 +33,7 @@ class PieChart extends React.Component {
 			.then((json) => {
 				let majorCityData = this.processMajorCityJsonToDrawingData(json)
 
-				// chartData {labels: [], series [[]...]}
-				this.chart = Highcharts.chart(this.props.chartId, {
+				this.chartOption = {
 				    chart: {
 				        plotBackgroundColor: null,
 				        plotBorderWidth: null,
@@ -48,32 +60,10 @@ class PieChart extends React.Component {
 				        }
 				    },
 					series: majorCityData["series"]
-				    // series: [{
-				    //     name: 'Brands',
-				    //     colorByPoint: true,
-				    //     data: [{
-				    //         name: 'Microsoft Internet Explorer',
-				    //         y: 56.33
-				    //     }, {
-				    //         name: 'Chrome',
-				    //         y: 24.03,
-				    //         sliced: true,
-				    //         selected: true
-				    //     }, {
-				    //         name: 'Firefox',
-				    //         y: 10.38
-				    //     }, {
-				    //         name: 'Safari',
-				    //         y: 4.77
-				    //     }, {
-				    //         name: 'Opera',
-				    //         y: 0.91
-				    //     }, {
-				    //         name: 'Proprietary or Undetectable',
-				    //         y: 0.2
-				    //     }]
-				    // }]
-				})
+				}
+
+				// chartData {labels: [], series [[]...]}
+				this.chart = Highcharts.chart(this.props.chartId, this.chartOption)
 
 
 			} )
@@ -186,8 +176,8 @@ class PieChart extends React.Component {
 	updateChart() {
 		if (this.chart != null) {
 			console.log("reflow")
-			this.chart.reflow()
-			this.chart.redraw()
+			this.chart.destroy()
+			this.chart = Highcharts.chart(this.props.chartId, this.chartOption)
 		}
 
 	}
@@ -195,7 +185,6 @@ class PieChart extends React.Component {
 	render() {
 		return(
 			<div>
-					<h2> {this.props.title} </h2>
 					<div className={"charts"} id={this.props.chartId} onClick={this.updateChart}></div>
 			</div>
 
