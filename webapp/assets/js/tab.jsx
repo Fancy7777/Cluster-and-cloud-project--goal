@@ -68,7 +68,6 @@ class Tab extends React.Component {
 						let title = elem.props.title
 						return (
 								<div id={title} className={"tabcontent"} >
-									<h3>{title}</h3>
 									{ elem }
 								</div>
 						)
