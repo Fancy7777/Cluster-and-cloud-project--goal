@@ -1,91 +1,240 @@
-{% extends "./base.html" %}
-{% block content %}
-	<!-- side bar inspired from -->
-	<!-- https://github.com/BlackrockDigital/startbootstrap-simple-sidebar -->
+{% extends "./base.html" %} {% block content %}
+<!-- side bar inspired from -->
+<!-- https://github.com/BlackrockDigital/startbootstrap-simple-sidebar -->
+<html class="noIE" lang="en-US">
+
 <head>
-	<link rel="stylesheet" href="../static/css/style.css" media="screen"/>
-	
+    <link rel="stylesheet" href="../static/css/style.css" media="screen" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0, user-scalable=no" />
+    <!-- google fonts -->
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=PT+Sans'>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Droid+Serif:regular,bold" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Alegreya+Sans:regular,italic,bold,bolditalic" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nixie+One:regular,italic,bold,bolditalic" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Alegreya+SC:regular,italic,bold,bolditalic" />
+    <!-- css -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/css/style.css" media="screen" />
 </head>
 
 <body>
 
-<div id="wrapper" class="toggled">
+	<!--Home-->
+    <div id="drawer-right">
+        <div class="cross text-right">
+            <a class="toggleDrawer" href="#"><i class="fa fa-times-circle fa-2x"></i></a>
+        </div>
+        <h2>Navigate</h2>
+        <nav>
+            <ul class="nav nav-pills nav-stacked">
+                <li>
+                    <a href="#wrapper"><i class="fa fa-home"></i> Home</a>
+                </li>
+                <li>
+                    <a href="#Design"><i class="fa fa-bookmark"></i> System Design</a>
+                </li>
+                <li>
+                    <a href="#usingtech"><i class="fa fa-tasks"></i> Using Technology</a>
+                </li>
+                <li>
+                    <a href="#chart"><i class="fa fa-wordpress"></i> Chart & Analysis</a>
+                </li>
+                <li>
+                    <a href="#testimonials"><i class="fa fa-heart"></i> Team Member</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <!-- #drawer-right -->
+    <!-- header show page -->
+    <div id="wrapper">
+        <div id="header" class="content-block header-wrapper">
+            <div class="header-wrapper-inner">
+                <section class="top clearfix">
+                    <div class="pull-left">
+                        <div id="twitter"></div>
+                    </div>
+                    <div class="pull-right">
+                        <a class="toggleDrawer" href="#"><i class="fa fa-bars fa-2x"></i></a>
+                    </div>
+                </section>
+                <section class="center">
+                    <div class="slogan">
+                        GOAL
+                    </div>
+                    <div class="secondary-slogan">
+                        Project by: Victor, Derek, Alan, Bing, Peter
+                    </div>
+                </section>
+            </div>
+        </div>
+        <!--Home-->
 
-		<div id="sidebar-wrapper"> </div>
-
-
-<!-- header show page -->	
-	<script src="../static/js/script.js"></script>
-		<div id="wrapper">
-			<div id="header" class="content-block header-wrapper">
-					<section class="top clearfix">
-						<!-- streaming twitter -->
-	    				<div class="content-block parallax" id="parallax">
-							<div class="container text-center">
-								<div id="twitter"></div>
-							</div>
-						</div>
-					</section>	
-
-				<div class="header-wrapper-inner">
-					<section class="center">
-						<div class="slogan">
-							GOAL
-						</div>
-						<div class="secondary-slogan">
-							Project by:
-								Victor, Derek, Alan, Bing, Peter
-						</div>
-
-						
-					</section>
-				</div>
-			</div><!-- header -->
-		</div>
-<!-- chart part -->	
-	<div id="tabs"></div>
-
-<!-- other part -->	
-	<div id="page-content-wrapper">
-		<h1> GOAL Project </h1>
-	    <p>Our Goal is to get H1 with our GOAL project :] </p>
-	    <div class="row">
-	        <div class="col-md-8">
-	            <table class="table table-bordered">
-
-	                {% for one_team_mate_name, one_team_mate_email in team_mates.items %}
-	                    <tr>
-	                        <td>{{ one_team_mate_name }}</td>
-	                        <td>{{ one_team_mate_email}}</td>
-	                    </tr>
-	                {% endfor %}
-	            </table>
-	        </div>
-	    </div>
-	    <div id="container"></div>
-
-	    
-		
-		<div id="map-outer" style="height:300px;width:300px;position:relative"> </div>
-	</div>
-
-</div>	
-
-
-
-			<div class="content-block" id="footer">
-				<div class="container">
-					<div class="row">
-						<p> By Victor, Derek, Alan, Bing, Peter
-					</div>
-				</div>
-			</div><!-- #footer -->
-</body>	
+        <!-- System Design-->
+        <div class="content-block" id="Design">
+            <div class="container">
+                <header class="block-heading cleafix">
+                    <h1>Our System Design</h1>
+                    <p>Take a look at some of our recent products</p>
+                </header>
+                <img src="../static/css/design.jpg" alt="System Design" style="width:1204px;height:628px;">
+                <p></p>
+                <h4>In our approach to architecture of the system, there are two main considerations - infrastructure design and application software component design and integration. The infrastructure setup gives us facility to house our application requirements, tools and frameworks. The key aspect for infrastructure is to be able to cope with growing user base and, scale up with more demanding analytic cases. For application design, we decompose engineering tasks into software components and integration of these software modules to serve the different use cases. Another key aspect of the system design is to be able to utilize Cloud Computing and build on these Cloud Platforms in mind. With these design consideration, we can possible achieve highly available, reliable and scalable distributed system.</h4>
+            </div>
+        </div>
+        <!-- System Design-->
 
 
 
 
+        <!-- Technology-->
+        <div id='System'>
+            <div class="content-block parallax" id="usingtech">
+                <div class="container text-center">
+                    <header class="block-heading cleafix">
+                        <h1>Related Using Technologies</h1>
+                    </header>
+                    <section class="block-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="service">
+                                    <h2>Couchdb</h2>
+                                    <img src="../static/css/couchdb.png" alt="CouchDB" style="width:400px;height:200px;">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="service">
+                                    <h2>Nectar</h2>
+                                    <img src="../static/css/nectar.png" alt="Nectar" style="width:400px;height:230px;">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="service">
+                                    <h2>NLTK</h2>
+                                    <img src="../static/css/spark.png" alt="Spark">
+                                </div>
+                            </div>
+                        </div>
+                        <p></p>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="service">
+                                    <h2>Tweepy</h2>
+                                    <img src="../static/css/tweepy.png" alt="Tweepy">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="service">
+                                    <h2>NLTK</h2>
+                                    <img src="../static/css/NLTK.png" alt="NLTK">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="service">
+                                    <h2>Django</h2>
+                                    <img src="../static/css/django.jpg" alt="Django">
+                                </div>
+                            </div>
+                            </row>
+                    </section>
+                    </div>
+                </div>
+            </div>
+            <!-- Technology-->
 
-	
 
+            <!-- Analysis-->
+            <div id="chart">
+                <h1>Analysis & Chart</h1>
+                <div id="tabs"></div>
+                <p> Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis Analysis</p>
+            </div>
+             <!-- Analysis-->
+
+             <!-- Teammember-->
+            <div class="content-block" id="testimonials">
+                <div class="container">
+                    <header class="block-heading cleafix">
+                        <h1>Team Member</h1>
+                    </header>
+                    <section class="block-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="testimonial">
+                                    <img src="../static/css/Victor.jpg">
+                                    <p>Victor handles deployment of Cluster building through all parts in the project. Great engineer, help in all directions.</p>
+                                    <strong>San Kho Lin (Victor)</strong>
+                                    <br/>
+                                    <span>Head Engineer, Team leader</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="testimonial">
+                                    <img src="../static/css/Peter.jpg">
+                                    <p>Peter handles analysis part and helps with CouchDB MapReduce generation.</p>
+                                    <strong>Zhiqiang Fang</strong>
+                                    <br/>
+                                    <span>Analysis Team member</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="testimonial">
+                                    <img src="../static/css/Derek.jpg">
+                                    <p>Derek handles analysis part and help with web application front end and Spark.</p>
+                                    <strong>Derui Wang</strong>
+                                    <br/>
+                                    <span>Analysis Team member & Web application member</span>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="testimonial">
+                                        <img src="../static/css/Bing.jpg">
+                                        <p>Bing handles web application building with Django and main engineer in MapReduce calculation.</p>
+                                        <strong>Bingfeng Liu</strong>
+                                        <br/>
+                                        <span>Web application Team member</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="testimonial">
+                                        <img src="../static/css/Alan.jpg">
+                                        <p>Alan handles CouchDB linking work with other parts and help with deployment.</p>
+                                        <strong>Alan</strong>
+                                        <br/>
+                                        <span>Cluster Team member</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                </section>
+            </div>
+        </div>
+        <!-- Teammember-->
+        <!-- other part -->
+        <div class="content-block" id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-6">&copy; Copyright GOAL Team</div>
+                    <div class="col-xs-6 text-right">Project by Victor, Derek, Bing, Alan, Peter</div>
+                </div>
+            </div>
+        </div>
+        <!-- #footer -->
+    </div>
+    <!-- #footer -->
+    <script src="../static/js/jquery-2.1.3.min.js"></script>
+    <script src="../static/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/jquery.actual.min.js"></script>
+    <script src="../static/js/jquery.scrollTo.min.js"></script>
+    <script src="../static/js/script.js"></script>
+</body>
+
+</html>
 {% endblock %}
