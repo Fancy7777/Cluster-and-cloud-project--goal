@@ -119,11 +119,11 @@ let aurinDataLabor2 = {
 	"canberra":0
 }
 
+// <LineChart chartId={"mychart3"} title={"Line Chart"} chartData={data}/>
 
 if (document.getElementById('tabs')) {
 ReactDOM.render(
 				<Tab >
-					// <LineChart chartId={"mychart3"} title={"Line Chart"} chartData={data}/>
 					<BarChart chartId={"mychart4"} title={"Bar Chart Bachelor"} chartTitle={chartTitleHuamn} need={"sumd"} chartDataName={aurinDataHumanCaptialName} chartData={aurinDataHumanCaptial}/>
 					<BarChart chartId={"mychart5"} title={"Bar Chart Manager"} chartTitle={chartTitleLabor1} need={"d100"} chartDataName={aurinDataLabor1Name} chartData={aurinDataLabor1}/>
 					<BarChart chartId={"mychart6"} title={"Bar Chart Unskilled"} chartTitle={chartTitleLabor2} need={"d100"} chartDataName={aurinDataLabor2Name} chartData={aurinDataLabor2}/>
