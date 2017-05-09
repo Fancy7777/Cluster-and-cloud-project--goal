@@ -1,0 +1,200 @@
+- hosts: sparklings
+  vars:
+    # common install base
+    install_base: mnt
+    # Oracle Java
+    java_rel: jdk-8u131-linux-x64
+    java_dl: http://download.oracle.com/otn-pub/java/jdk/8u131-b11/{{java_rel}}.tar.gz
+    java_up: jdk-8u131-linux-x64.tar.gz
+    java_un: jdk1.8.0_131  # strip -linux-x64 after un-archive and change dash - to period .
+    java_bin: /{{install_base}}/java/bin
+    # Scala
+    scala_rel: scala-2.12.2
+    scala_dl: https://downloads.lightbend.com/scala/2.12.2/{{scala_rel}}.tgz
+    scala_bin: /{{install_base}}/scala/bin
+    # Spark
+    spark_rel: spark-2.1.1-bin-hadoop2.7
+    spark_dl: http://d3kbcqa49mib13.cloudfront.net/{{spark_rel}}.tgz
+    #spark_install_base: mnt
+    spark_bin: /{{install_base}}/spark/bin
+    spark_sbin: /{{install_base}}/spark/sbin
+  tasks:
+    - name: Build Hosts
+      lineinfile:
+        dest: /etc/hosts
+        #backup: yes
+        regexp: '.*{{ item }}$'
+        line: "{{ hostvars[item].ansible_eth0.ipv4.address }} {{item}}"
+        state: present
+      when: hostvars[item].ansible_eth0.ipv4.address is defined
+      with_items: "{{ groups.all }}"
+
+    # Oracle Java
+#    - name: Download Oracle Java
+#      get_url:
+#        url: "{{java_dl}}"
+#        dest: /usr/local/src
+#        headers: "Cookie: oraclelicense=accept-securebackup-cookie"
+#        validate_certs: no
+
+    # Download Oracle Java manually and save relative to this playbook recipe, see {{java_up}} variable
+    - name: Upload Oracle Java
+      copy:
+        src: ./{{java_up}}
+        dest: /usr/local/src
+        owner: root
+        group: root
+        mode: 0644
+        force: no  # upload if not exist
+
+    - name: Unpack Oracle Java
+      unarchive:
+        src: /usr/local/src/{{java_rel}}.tar.gz
+        dest: /{{install_base}}
+        remote_src: yes
+        owner: root
+        group: root
+
+    - name: Create Java Symlink
+      file:
+        src: /{{install_base}}/{{java_un}}
+        dest: /{{install_base}}/java
+        owner: root
+        group: root
+        state: link
+
+    - name: Create JAVA_HOME Envar
+      lineinfile:
+        dest: /etc/environment
+        regexp: "JAVA_HOME"
+        line: "JAVA_HOME=/{{install_base}}/java"
+        state: present
+
+    # Yaml requires escaping backslashes in double quotes but not in single quotes
+    - name: Add {{java_bin}} to PATH
+      lineinfile:
+        dest: /etc/environment
+        state: present
+        backrefs: yes
+        regexp: 'PATH=(["]*)((?!.*?{{java_bin}}).*?)(["]*)$'
+        line: 'PATH=\1\2:{{java_bin}}\3'
+
+    # Scala
+    - name: Download Scala
+      get_url:
+        url: "{{scala_dl}}"
+        dest: /usr/local/src
+
+    - name: Unpack Scala
+      unarchive:
+        src: /usr/local/src/{{scala_rel}}.tgz
+        dest: /{{install_base}}
+        remote_src: yes
+        owner: root
+        group: root
+
+    - name: Create Scala Symlink
+      file:
+        src: /{{install_base}}/{{scala_rel}}
+        dest: /{{install_base}}/scala
+        owner: root
+        group: root
+        state: link
+
+    - name: Create SCALA_HOME Envar
+      lineinfile:
+        dest: /etc/environment
+        regexp: "SCALA_HOME"
+        line: "SCALA_HOME=/{{install_base}}/scala"
+        state: present
+
+    # Yaml requires escaping backslashes in double quotes but not in single quotes
+    - name: Add {{scala_bin}} to PATH
+      lineinfile:
+        dest: /etc/environment
+        state: present
+        backrefs: yes
+        regexp: 'PATH=(["]*)((?!.*?{{scala_bin}}).*?)(["]*)$'
+        line: 'PATH=\1\2:{{scala_bin}}\3'
+
+    # Spark
+    - name: Download Spark
+      get_url:
+        url: "{{spark_dl}}"
+        dest: /usr/local/src
+
+    - name: Unpack Spark
+      unarchive:
+        src: /usr/local/src/{{spark_rel}}.tgz
+        dest: /{{install_base}}
+        remote_src: yes
+        owner: root
+        group: root
+
+    - name: Create Spark Symlink
+      file:
+        src: /{{install_base}}/{{spark_rel}}
+        dest: /{{install_base}}/spark
+        owner: root
+        group: root
+        state: link
+
+    - name: Create SPARK_HOME Envar
+      lineinfile:
+        dest: /etc/environment
+        regexp: "SPARK_HOME"
+        line: "SPARK_HOME=/{{install_base}}/spark"
+        state: present
+
+    # Yaml requires escaping backslashes in double quotes but not in single quotes
+    - name: Add {{spark_bin}} to PATH
+      lineinfile:
+        dest: /etc/environment
+        state: present
+        backrefs: yes
+        regexp: 'PATH=(["]*)((?!.*?{{spark_bin}}).*?)(["]*)$'
+        line: 'PATH=\1\2:{{spark_bin}}\3'
+
+    - name: Add {{spark_sbin}} to PATH
+      lineinfile:
+        dest: /etc/environment
+        state: present
+        backrefs: yes
+        regexp: 'PATH=(["]*)((?!.*?{{spark_sbin}}).*?)(["]*)$'
+        line: 'PATH=\1\2:{{spark_sbin}}\3'
+
+#    - name: Add Spark System Account
+#      user:
+#        name: spark
+#        comment: "Spark System Account"
+#        shell: /bin/bash
+#        system: yes
+#        home: /{{install_base}}/spark
+#        createhome: no
+
+    - name: Change Spark Ownership
+      file:
+        path: /{{install_base}}/{{spark_rel}}
+        owner: ubuntu
+        group: ubuntu
+        #mode: 0770
+        recurse: yes
+        state: directory
+
+    - name: Configure Spark Master
+      copy:
+        src: ./spark-env.sh
+        dest: /{{install_base}}/spark/conf/spark-env.sh
+        owner: ubuntu
+        group: ubuntu
+        mode: 0770
+
+    - name: Configure Spark Slaves
+      copy:
+        src: ./slaves
+        dest: /{{install_base}}/spark/conf/slaves
+        owner: ubuntu
+        group: ubuntu
+        mode: 0644
+
+    - name: Setup password-less ssh for user ubuntu and start manual

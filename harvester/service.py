@@ -1,9 +1,22 @@
 import json
 
 import logging
+from collections import OrderedDict
+
+import re
+from nltk.sentiment import SentimentIntensityAnalyzer
 
 from harvester import config
 from harvester.db import Repository
+
+tag = config.parser['tagging']['tag_name']
+keyword = config.parser['tagging']['keyword']
+
+sid = SentimentIntensityAnalyzer()
+
+
+def sort_ordered_dict(order_dict):
+    return OrderedDict(sorted(order_dict.items(), key=lambda x: x[1], reverse=True))
 
 
 class TweetHarvestingService(object):
@@ -28,8 +41,12 @@ class TweetHarvestingService(object):
         if skip:
             pass
         else:
-            # NOTE:
-            # We can filter at this point before storing into db.
-            # For now, just save the raw tweet.
+
+            # Add sentiment analysis tag if a keyword present
+            match = re.findall(keyword, tweet['text'])
+            if match:
+                result = sort_ordered_dict(sid.polarity_scores(tweet['text'])).keys()
+                tweet.update({tag: list(result)[0]})
+
             _id, _rev = self.repo.store(tweet)
             print('id: {}  rev: {}'.format(_id, _rev))

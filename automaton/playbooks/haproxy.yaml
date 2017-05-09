@@ -1,0 +1,21 @@
+- hosts: hanode
+  vars:
+    na: na
+  tasks:
+    - name: Install HAProxy
+      apt:
+        name: haproxy
+        state: latest
+
+    - name: Configure HAProxy
+      copy:
+        src: ./haproxy.cfg
+        dest: /etc/haproxy/haproxy.cfg
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Restart CouchDB Service
+      systemd:
+        name: haproxy
+        state: restarted

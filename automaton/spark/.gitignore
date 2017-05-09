@@ -1,0 +1,5 @@
+.idea
+*.iml
+note.txt
+*.tar.gz
+*.retry
