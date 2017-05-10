@@ -134,6 +134,7 @@ ReactDOM.render(
 						This means Trump is advocated by those people with less education.
 						This is actually the same as media reported. Trump&#39;s policy is beneficial to workers. And Hillary is good for high class people.
 						</p>
+						<HeatMapBox title={"Heat Map"} mapboxAccessUrl={mapboxAccess} mapid={mapid}/>
 					</BarChart>
 					<BarChart chartId={"mychart5"} title={"Bar Chart Unskilled"} chartTitle={chartTitleLabor1} need={"d100"} chartDataName={aurinDataLabor1Name} chartData={aurinDataLabor1}/>
 					<BarChart chartId={"mychart6"} title={"Bar Chart Manager"} chartTitle={chartTitleLabor2} need={"d100"} chartDataName={aurinDataLabor2Name} chartData={aurinDataLabor2}/>
