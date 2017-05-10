@@ -2,10 +2,14 @@
 # You may need to change these for your environment.
 #     setup webapp, analyzer and harvester
 - hosts: appservers
+  gather_facts: no #required python 2
+  pre_tasks:
+    - name: 'install python2' # make sure python2 is installed ansible needs it
+      raw: sudo apt-get -y install python-simplejson
   vars:
-    #git_base: /home/ubuntu
-    git_base: "{{ ansible_env.HOME }}"
-    git_repo: 'git@github.com:victorskl/goal.git'
+    git_base: /home/ubuntu
+    #git_base: "{{ ansible_env.HOME }}"
+    git_repo: 'https://github.com/victorskl/goal'
     web_js_compile: node_modules/.bin/webpack --config webpack.config.js
     django_server_run: python3 manage.py runserver 0.0.0.0:8000
   tasks:
@@ -40,7 +44,6 @@
         dest: "{{ git_base }}/goal" #must added in folder other wise just error
         clone: yes
         accept_hostkey: yes
-        key_file: "{{ git_base }}/.ssh/id_rsa"
         force: yes
       become: true
 
