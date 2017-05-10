@@ -134,8 +134,7 @@ class HeatMapBox extends React.Component{
 	render() {
 		return(
 				<div>
-					<h1>Heat Map</h1>
-					<div id={this.props.mapid} style={{height:"250px", width:"500px", position:"relative"}}></div>
+					<div id={this.props.mapid} style={{height:"400px", width:"700px", position:"relative"}}></div>
 				</div>
 		)
 	}
