@@ -126,18 +126,38 @@ if (document.getElementById('tabs')) {
 ReactDOM.render(
 				<Tab >
 					<BarChart chartId={"mychart4"} title={"Bar Chart Bachelor"} chartTitle={chartTitleHuamn} need={"sumd"} chartDataName={aurinDataHumanCaptialName} chartData={aurinDataHumanCaptial}>
-						<p> According to the above barchart, we use human capital dataset from AURIN to do this analysis.
-						We find that in Melbourne and Sydney, the number of people who has bachelor degree is quite small.
-						And people without bachelor degrees tend to support Trump. On the contrary, by observing the
-						barchart in Brisbane and Canberra, more people gain their bachelor degrees in these cities,
-						they are not supporting Trump as Melbourne and Sydney does.
-						This means Trump is advocated by those people with less education.
-						This is actually the same as media reported. Trump&#39;s policy is beneficial to workers. And Hillary is good for high class people.
+						<p>
+							According to the above bar chart, we use the human capital dataset from
+							AURIN to do this analysis. We find that in Melbourne and Sydney, the
+							number of people who has bachelor degree is quite small. And people
+							without bachelor degrees tend to support Trump. On the contrary, by
+							observing the bar chart in Brisbane and Canberra, more people gain their
+							bachelor degrees in these cities, they are not supporting Trump as
+							Melbourne and Sydney does. This means Trump is advocated by those people
+							with less education. This is actually the same as media reported. Trump&#39;s
+							 policy is beneficial to workers. And Hillary is good for high-class people.
 						</p>
-						<HeatMapBox title={"Heat Map"} mapboxAccessUrl={mapboxAccess} mapid={mapid}/>
+				<HeatMapBox title={"Heat Map"} mapboxAccessUrl={mapboxAccess} mapid={mapid}/>
 					</BarChart>
-					<BarChart chartId={"mychart5"} title={"Bar Chart Unskilled"} chartTitle={chartTitleLabor1} need={"d100"} chartDataName={aurinDataLabor1Name} chartData={aurinDataLabor1}/>
-					<BarChart chartId={"mychart6"} title={"Bar Chart Manager"} chartTitle={chartTitleLabor2} need={"d100"} chartDataName={aurinDataLabor2Name} chartData={aurinDataLabor2}/>
+					<BarChart chartId={"mychart5"} title={"Bar Chart Unskilled"} chartTitle={chartTitleLabor1} need={"d100"} chartDataName={aurinDataLabor1Name} chartData={aurinDataLabor1}>
+						<p>
+							According to the above bar chart, we use LGA Labour Force dataset from AURIN to do this analysis.
+							It is easy to see that the percent of unskilled and semi-skilled workers is low in Melbourne and
+							Sydney, while there are more unskilled and semi-skilled workers in Brisbane, Darwin and Hobart.
+							This also shows that Trump is advocated by those people with less income. This is actually the same
+							as the reality. Trump&#39;s policy is beneficial to workers.
+						</p>
+					</BarChart>
+					<BarChart chartId={"mychart6"} title={"Bar Chart Manager"} chartTitle={chartTitleLabor2} need={"d100"} chartDataName={aurinDataLabor2Name} chartData={aurinDataLabor2}>
+						<p>
+							According to the above bar chart, we use LGA Labour Force dataset from AURIN to do this analysis.
+							We can see that that the proportion of managers, administrators and
+							professionals is high in Sydney and Melbourne, while the rate is low in Brisbane, Darwin and Hobart.
+							This also shows that Trump got more objections by those people with higher
+							status. This is actually the same as media reported.
+							Trump's policy is not beneficial to the rich. And Hillary is good for high-class people.
+						</p>
+					</BarChart>
 					<PieChart chartId={"mychart7"} title={"Pie Chart"} chartData={dataPie}/>
 				</Tab>, document.getElementById('tabs'))
 }
