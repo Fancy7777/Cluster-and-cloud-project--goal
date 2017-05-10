@@ -348,7 +348,10 @@ h1, h2, h3, h4, h5, h6{
 	padding: 50px;
 }
 
-
+#heatmap h1{
+	text-align: center;
+	padding: 50px;
+}
 
 
 
