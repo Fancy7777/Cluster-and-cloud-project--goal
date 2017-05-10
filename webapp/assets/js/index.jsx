@@ -82,6 +82,7 @@ if (document.getElementById('twitter')) {
 // ReactDOM.render(<HeatMapBox title={"Heat Map"} mapboxAccessUrl={mapboxAccess} mapid={mapid}/>, document.getElementById('map-outer'))
 
 let aurinDataHumanCaptialName = "bachelor"
+
 let chartTitleHuamn = "Sentimen Analysis of people's postive and negative attitude rate for Trump vs bachelor rate of each Australia's major city"
 let aurinDataHumanCaptial = {
 		"sydney": 43040,
@@ -124,7 +125,16 @@ let aurinDataLabor2 = {
 if (document.getElementById('tabs')) {
 ReactDOM.render(
 				<Tab >
-					<BarChart chartId={"mychart4"} title={"Bar Chart Bachelor"} chartTitle={chartTitleHuamn} need={"sumd"} chartDataName={aurinDataHumanCaptialName} chartData={aurinDataHumanCaptial}/>
+					<BarChart chartId={"mychart4"} title={"Bar Chart Bachelor"} chartTitle={chartTitleHuamn} need={"sumd"} chartDataName={aurinDataHumanCaptialName} chartData={aurinDataHumanCaptial}>
+						<p> According to the above barchart, we use human capital dataset from AURIN to do this analysis.
+						We find that in Melbourne and Sydney, the number of people who has bachelor degree is quite small.
+						And people without bachelor degrees tend to support Trump. On the contrary, by observing the
+						barchart in Brisbane and Canberra, more people gain their bachelor degrees in these cities,
+						they are not supporting Trump as Melbourne and Sydney does.
+						This means Trump is advocated by those people with less education.
+						This is actually the same as media reported. Trump&#39;s policy is beneficial to workers. And Hillary is good for high class people.
+						</p>
+					</BarChart>
 					<BarChart chartId={"mychart5"} title={"Bar Chart Unskilled"} chartTitle={chartTitleLabor1} need={"d100"} chartDataName={aurinDataLabor1Name} chartData={aurinDataLabor1}/>
 					<BarChart chartId={"mychart6"} title={"Bar Chart Manager"} chartTitle={chartTitleLabor2} need={"d100"} chartDataName={aurinDataLabor2Name} chartData={aurinDataLabor2}/>
 					<PieChart chartId={"mychart7"} title={"Pie Chart"} chartData={dataPie}/>
