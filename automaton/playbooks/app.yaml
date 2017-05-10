@@ -10,7 +10,7 @@
     git_base: /home/ubuntu
     #git_base: "{{ ansible_env.HOME }}"
     git_repo: 'https://github.com/victorskl/goal'
-    web_js_compile: node_modules/.bin/webpack --config webpack.config.js
+    web_js_compile: node_modules/.bin/webpack -p --config webpack.config.js
     django_server_run: python3 manage.py runserver 0.0.0.0:8000
   tasks:
     - name: System Update
