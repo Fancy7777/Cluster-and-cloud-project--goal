@@ -79,8 +79,9 @@ if (document.getElementById('twitter')) {
 	ReactDOM.render(<TwitterStreamBox ajax_url={ajax_url}/>, document.getElementById('twitter'))
 }
 // ReactDOM.render(<ChartsMultiple />, document.getElementById('charts'))
-// ReactDOM.render(<HeatMapBox title={"Heat Map"} mapboxAccessUrl={mapboxAccess} mapid={mapid}/>, document.getElementById('map-outer'))
-
+if (document.getElementById('map-outer')) {
+	ReactDOM.render(<HeatMapBox title={"Heat Map"} mapboxAccessUrl={mapboxAccess} mapid={mapid}/>, document.getElementById('map-outer'))
+}
 let aurinDataHumanCaptialName = "bachelor"
 
 let chartTitleHuamn = "Sentimen Analysis of people's postive and negative attitude rate for Trump vs bachelor rate of each Australia's major city"
@@ -137,7 +138,6 @@ ReactDOM.render(
 							with less education. This is actually the same as media reported. Trump&#39;s
 							 policy is beneficial to workers. And Hillary is good for high-class people.
 						</p>
-				<HeatMapBox title={"Heat Map"} mapboxAccessUrl={mapboxAccess} mapid={mapid}/>
 					</BarChart>
 					<BarChart chartId={"mychart5"} title={"Bar Chart Unskilled"} chartTitle={chartTitleLabor1} need={"d100"} chartDataName={aurinDataLabor1Name} chartData={aurinDataLabor1}>
 						<p>
@@ -158,6 +158,7 @@ ReactDOM.render(
 							Trump's policy is not beneficial to the rich. And Hillary is good for high-class people.
 						</p>
 					</BarChart>
-					<PieChart chartId={"mychart7"} title={"Pie Chart"} chartData={dataPie}/>
 				</Tab>, document.getElementById('tabs'))
 }
+
+// 					<PieChart chartId={"mychart7"} title={"Pie Chart"} chartData={dataPie}/>
