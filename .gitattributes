@@ -4,3 +4,8 @@
 #
 webapp/assets/bundles/* linguist-generated=true
 webapp/visualapp/static/js/* linguist-vendored
+
+webapp/visualapp/static/js/bootstrap.js linguist-vendored
+webapp/visualapp/static/js/highcharts.js linguist-vendored
+webapp/visualapp/static/js/highcharts-3d.js linguist-vendored
+webapp/assets/js/realworld.10000.js linguist-vendored
