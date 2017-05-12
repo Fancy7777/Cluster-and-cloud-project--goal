@@ -3,9 +3,14 @@
 # More https://github.com/github/linguist#overrides
 #
 webapp/assets/bundles/* linguist-generated=true
+
+# This still did not work!
 webapp/visualapp/static/js/* linguist-vendored
 
-webapp/visualapp/static/js/bootstrap.js linguist-vendored
-webapp/visualapp/static/js/highcharts.js linguist-vendored
-webapp/visualapp/static/js/highcharts-3d.js linguist-vendored
+#
+webapp/visualapp/static/js/*.js linguist-vendored
+
+# Just JavaScript data, TODO should put under different folder e.g. geodata
 webapp/assets/js/realworld.10000.js linguist-vendored
+webapp/assets/js/us-states.js linguist-vendored
+webapp/assets/js/melbourneGeo.js linguist-vendored
