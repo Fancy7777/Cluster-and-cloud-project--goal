@@ -2,5 +2,5 @@
 # Please include vendor dependencies and generated code here
 # More https://github.com/github/linguist#overrides
 #
-assets/bundles/* linguist-generated=true
-visualapp/static/js/* linguist-vendored
+webapp/assets/bundles/* linguist-generated=true
+webapp/visualapp/static/js/* linguist-vendored
