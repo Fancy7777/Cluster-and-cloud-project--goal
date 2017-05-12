@@ -1,16 +1,26 @@
 #
 # Please include vendor dependencies and generated code here
 # More https://github.com/github/linguist#overrides
+# Exclude what we don't write!
 #
+
 webapp/assets/bundles/* linguist-generated=true
 
-# This still did not work!
+# This do not work!
 webapp/visualapp/static/js/* linguist-vendored
 
-#
+# This work
 webapp/visualapp/static/js/*.js linguist-vendored
+# But let even remove it from search
+webapp/visualapp/static/js/* linguist-generated=true
 
 # Just JavaScript data, TODO should put under different folder e.g. geodata
-webapp/assets/js/realworld.10000.js linguist-vendored
-webapp/assets/js/us-states.js linguist-vendored
-webapp/assets/js/melbourneGeo.js linguist-vendored
+webapp/assets/js/realworld.10000.js linguist-generated=true
+webapp/assets/js/us-states.js linguist-generated=true
+webapp/assets/js/melbourneGeo.js linguist-generated=true
+
+# Vendor CSS, TODO should put under different folder e.g. _vendor
+webapp/visualapp/static/css/bootstrap.css linguist-generated=true
+webapp/visualapp/static/css/bootstrap-theme.css linguist-generated=true
+webapp/visualapp/static/css/chartist.min.css linguist-generated=true
+webapp/visualapp/static/css/font-awesome.min.css linguist-generated=true
